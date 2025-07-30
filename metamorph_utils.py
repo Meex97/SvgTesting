@@ -1,5 +1,9 @@
 import random
 import unicodedata
+import wn
+
+from utils import metamorph_sentence_synonyms
+
 
 def filler_words(question):
     word_count = len(question.split())
@@ -88,7 +92,9 @@ def mistakes(question):
     return metamorphed_qs
 
 
-
+def synonyms(question):
+    print("\nTest case: " + question + "\n____________________")
+    return metamorph_sentence_synonyms(question)
 
 
 def get_metamorphed_questions(question, num):
@@ -107,7 +113,7 @@ def get_metamorphed_questions(question, num):
         case 6:
             metamorphed_qs = []
         case 7:
-            metamorphed_qs = []
+            metamorphed_qs = synonyms(question)
         case 8:
             metamorphed_qs = mistakes(question)
         case _:
