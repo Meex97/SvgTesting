@@ -1,0 +1,120 @@
+1; Che cosa vuol dire sopra i cerchi A e B?
+1; Sopra i cerchi che cosa vuol dire A e B?
+1; A e B sopra i cerchi che cosa vuol dire?
+2; Perché ci sono due cerchi?
+2; Due cerchi perché ci sono?
+2; Ci sono due cerchi, perché?
+3; Chi sono Paola, Achille, Leone e Cesare?
+3; Paola, Achille, Leone e Cesare chi sono?
+3; Chi Paola, Achille, Leone e Cesare sono?
+4; Perché ci sono delle frecce?
+4; Delle frecce perché ci sono?
+4; Ci sono delle frecce, perché?
+5; Dove vanno le frecce?
+5; Le frecce dove vanno?
+5; Dove le frecce vanno?
+6; Che cosa vogliono dire i numeri nel cerchio B?
+6; I numeri nel cerchio B che cosa vogliono dire?
+6; Che cosa i numeri nel cerchio B vogliono dire?
+7; Perché Paola va verso il numero 27?
+7; Verso il numero 27 perché va Paola?
+7; Perché verso il numero 27 va Paola?
+8; Perché Achille va verso il numero 34?
+8; Verso il numero 34 perché va Achille?
+8; Perché verso il numero 34 va Achille?
+9; Perché ci sono dei punti vicino ai nomi?
+9; Dei punti vicino ai nomi perché ci sono?
+9; Ci sono dei punti vicino ai nomi, perché?
+10; Perché ci sono dei punti vicino ai numeri?
+10; Dei punti vicino ai numeri perché ci sono?
+10; Ci sono dei punti vicino ai numeri, perché?
+11; Che cosa significa il cerchio A?
+11; Il cerchio A che cosa significa?
+11; Che cosa il cerchio A significa?
+12; Che cosa significa il cerchio B?
+12; Il cerchio B che cosa significa?
+12; Che cosa il cerchio B significa?
+13; I numeri sono l’età delle persone?
+13; L’età delle persone sono i numeri?
+13; Sono i numeri l’età delle persone?
+14; I numeri sono dei voti?
+14; Dei voti sono i numeri?
+14; Sono dei voti i numeri?
+15; Paola ha preso 27?
+15; 27 ha preso Paola?
+15; Ha preso 27 Paola?
+16; Leone ha preso 42?
+16; 42 ha preso Leone?
+16; Ha preso 42 Leone?
+17; Cesare ha preso 30?
+17; 30 ha preso Cesare?
+17; Ha preso 30 Cesare?
+18; Achille ha preso 34?
+18; 34 ha preso Achille?
+18; Ha preso 34 Achille?
+19; Perché il numero 50 non ha nessuna freccia?
+19; Il numero 50 perché non ha nessuna freccia?
+19; Perché nessuna freccia ha il numero 50?
+20; Nessuno va al numero 50?
+20; Al numero 50 nessuno va?
+20; Va nessuno al numero 50?
+21; È brutto il numero 50?
+21; Il numero 50 è brutto?
+21; Brutto è il numero 50?
+22; Si può mettere una freccia verso 50?
+22; Una freccia verso 50 si può mettere?
+22; Verso 50 si può mettere una freccia?
+23; Perché c’è solo una freccia per persona?
+23; Solo una freccia per persona perché c’è?
+23; Perché per persona c’è solo una freccia?
+24; Si può avere più frecce?
+24; Più frecce si può avere?
+24; Si possono avere più frecce?
+25; Si può avere due numeri?
+25; Due numeri si può avere?
+25; Si possono avere due numeri?
+26; Posso fare un disegno simile con gli animali?
+26; Un disegno simile con gli animali posso fare?
+26; Con gli animali un disegno simile posso fare?
+27; Questo è un gioco?
+27; È un gioco questo?
+27; Un gioco questo è?
+28; È una specie di mappa?
+28; Una specie di mappa è?
+28; È una specie di mappa questa?
+29; A cosa serve questo disegno?
+29; Questo disegno a cosa serve?
+29; A cosa questo disegno serve?
+30; È matematica?
+30; Matematica è?
+30; Questa è matematica?
+31; Si chiamano insiemi questi cerchi?
+31; Questi cerchi si chiamano insiemi?
+31; Insiemi si chiamano questi cerchi?
+32; Che cos’è un insieme?
+32; Un insieme che cos’è?
+32; Che cos’è un insieme questo?
+33; I numeri sono premi?
+33; Premi sono i numeri?
+33; Sono premi i numeri?
+34; Perché Leone non va da 34?
+34; Da 34 Leone non va, perché?
+34; Perché da 34 non va Leone?
+35; Chi ha preso il numero più alto?
+35; Il numero più alto chi ha preso?
+35; Chi il numero più alto ha preso?
+36; Chi ha preso il numero più basso?
+36; Il numero più basso chi ha preso?
+36; Chi il numero più basso ha preso?
+37; Ci sono altri nomi che possiamo aggiungere?
+37; Altri nomi che possiamo aggiungere ci sono?
+37; Ci sono che possiamo aggiungere altri nomi?
+38; Posso inventare io i numeri?
+38; Io posso inventare i numeri?
+38; I numeri posso inventare io?
+39; Possiamo cambiare le frecce?
+39; Le frecce possiamo cambiare?
+39; Cambiare le frecce possiamo?
+40; Se cambio la freccia di Paola, succede qualcosa?
+40; Succede qualcosa se cambio la freccia di Paola?
+40; Se la freccia di Paola cambio, succede qualcosa?

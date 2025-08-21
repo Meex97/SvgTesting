@@ -2,7 +2,7 @@ import random
 import unicodedata
 import wn
 
-from utils import metamorph_sentence_synonyms
+from utils import metamorph_sentence_synonyms, metamorph_sentence_synonyms_simple
 
 
 def filler_words(question):
@@ -94,7 +94,45 @@ def mistakes(question):
 
 def synonyms(question):
     print("\nTest case: " + question + "\n____________________")
-    return metamorph_sentence_synonyms(question)
+    #return metamorph_sentence_synonyms(question)
+    return metamorph_sentence_synonyms_simple(question)
+
+
+def active_passive(question_number):
+    file_path = "res/active_passive_corpus.txt"
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            for i, line in enumerate(f, 1):
+                question = line.strip()
+                if question_number == i:
+                    return [question]
+
+    except FileNotFoundError:
+        print(f"file '{file_path}' not found.")
+    except Exception as e:
+        print(f"Error reading file: {e}")
+
+
+def inversion_anastrophe(question_number):
+    file_path = "res/inversion_corpus.txt"
+    metamorphed_qs = []
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line in f:
+                tmp_line = line.strip()
+                question = tmp_line.split(";")[1].strip()
+                number = int(tmp_line.split(";")[0].strip())
+                if question_number == number:
+                    metamorphed_qs.append(question)
+
+    except FileNotFoundError:
+        print(f"file '{file_path}' not found.")
+    except Exception as e:
+        print(f"Error reading file: {e}")
+
+    return metamorphed_qs
 
 
 def get_metamorphed_questions(question, num):
@@ -105,11 +143,11 @@ def get_metamorphed_questions(question, num):
         case 2:
             metamorphed_qs = []
         case 3:
-            metamorphed_qs = []
+            metamorphed_qs = inversion_anastrophe(question)
         case 4:
             metamorphed_qs = []
         case 5:
-            metamorphed_qs = []
+            metamorphed_qs = active_passive(question)
         case 6:
             metamorphed_qs = []
         case 7:

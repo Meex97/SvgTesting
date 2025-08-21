@@ -1,5 +1,7 @@
+from llama4 import ask_llama
 from metamorph_utils import *
 from test import *
+from utils import extract_couples
 
 
 def multiple_question(question, index):
@@ -41,34 +43,51 @@ def test_multiple_questions(question, i):
         compare_multiple(test_case1, test_case2, follow_up)
 
 
+def test_mr_6():
+    n = 1
+    svg_path = f"res/esempio{n}.svg"
+    for couple in extract_couples(svg_path):
+        test_same(couple[0], [couple[1]], n)
+
+
 def main():
     print("Start SVG-AIML testing\n")
+
+    #ask_llama("Rendi questa frase passiva, rispondi solo con la frase: \"Cosa vuol dire \"A\" e \"B\" sopra i cerchi?\"")
+
     file_path = "res/corpus.txt"
 
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             for i, line in enumerate(f, 1):
                 question = line.strip()
-                #print(f" {i}: {question}")
-                #get_dialogue_answer(question)
+                # print(f" {i}: {question}")
+                # get_dialogue_answer(question)
 
                 # 1: filler words
                 #test_same(question, get_metamorphed_questions(question, 1))
+
+                # 3: sentence inversion / anastrophe
+                # test_same(question, get_metamorphed_questions(i, 3))
+                # 5: active passive sentence
+                # test_same(question, get_metamorphed_questions(i, 5))
+
                 # 7: synonyms
-                test_same(question, get_metamorphed_questions(question, 7))
+                # test_same(question, get_metamorphed_questions(question, 7))
                 # 8: mistakes
                 #test_same(question, get_metamorphed_questions(question, 8))
 
                 # 10: multiple questions
                 #test_multiple_questions(question, i)
 
-
-
     except FileNotFoundError:
         print(f"file '{file_path}' not found.")
     except Exception as e:
         print(f"Error reading file: {e}")
 
+
+    # 6: domain/codomain
+    #test_mr_6()
 
 
 if __name__ == "__main__":
