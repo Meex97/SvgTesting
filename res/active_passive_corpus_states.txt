@@ -1,0 +1,170 @@
+1;[NON TRASFORMABILE]
+2;The automaton should be described
+3;[NON TRASFORMABILE]
+4;[NON TRASFORMABILE]
+5;It should be described please
+6;How many transitions are contained by the automaton
+7;[NON TRASFORMABILE]
+8;[NON TRASFORMABILE]
+9;[NON TRASFORMABILE]
+10;[NON TRASFORMABILE]
+11;[NON TRASFORMABILE]
+12;[NON TRASFORMABILE]
+13;[NON TRASFORMABILE]
+14;[NON TRASFORMABILE]
+15;[NON TRASFORMABILE]
+16;The automaton should be described
+17;A language allowing words made of an odd number of 0s and 1s is accepted by the automaton
+18;[NON TRASFORMABILE]
+19;If q2 is the final state the automaton accepts the same language
+20;The automaton should be briefly described
+21;[NON TRASFORMABILE]
+22;[NON TRASFORMABILE]
+23;[NON TRASFORMABILE]
+24;[NON TRASFORMABILE]
+25;[NON TRASFORMABILE]
+26;[NON TRASFORMABILE]
+27;A list of the arcs should be given
+28;[NON TRASFORMABILE]
+29;[NON TRASFORMABILE]
+30;[NON TRASFORMABILE]
+31;[NON TRASFORMABILE]
+32;[NON TRASFORMABILE]
+33;[NON TRASFORMABILE]
+34;[NON TRASFORMABILE]
+35;[NON TRASFORMABILE]
+36;[NON TRASFORMABILE]
+37;[NON TRASFORMABILE]
+38;[NON TRASFORMABILE]
+39;[NON TRASFORMABILE]
+40;[NON TRASFORMABILE]
+41;[NON TRASFORMABILE]
+42;[NON TRASFORMABILE]
+43;[NON TRASFORMABILE]
+44;[NON TRASFORMABILE]
+45;Can the automaton be described to me
+46;Could the automaton be briefly described to me
+47;[NON TRASFORMABILE]
+48;[NON TRASFORMABILE]
+49;[NON TRASFORMABILE]
+50;[NON TRASFORMABILE]
+51;[NON TRASFORMABILE]
+52;[NON TRASFORMABILE]
+53;[NON TRASFORMABILE]
+54;[NON TRASFORMABILE]
+55;[NON TRASFORMABILE]
+56;[NON TRASFORMABILE]
+57;[NON TRASFORMABILE]
+58;[NON TRASFORMABILE]
+59;[NON TRASFORMABILE]
+60;[NON TRASFORMABILE]
+61;[NON TRASFORMABILE]
+62;[NON TRASFORMABILE]
+63;[NON TRASFORMABILE]
+64;[NON TRASFORMABILE]
+65;[NON TRASFORMABILE]
+66;What is recognized by the automaton
+67;[NON TRASFORMABILE]
+68;[NON TRASFORMABILE]
+69;[NON TRASFORMABILE]
+70;[NON TRASFORMABILE]
+71;[NON TRASFORMABILE]
+72;[NON TRASFORMABILE]
+73;[NON TRASFORMABILE]
+74;The automaton should be described please
+75;Can a representation of the automaton be provided
+76;The automaton should be described graphically
+77;Some examples of inputs and output should be given to me
+78;Can some examples of inputs be provided to me
+79;[NON TRASFORMABILE]
+80;Can the input and the output be described
+81;Can the transition function be described
+82;[NON TRASFORMABILE]
+83;Let me be told about transitions
+84;[NON TRASFORMABILE]
+85;[NON TRASFORMABILE]
+86;[NON TRASFORMABILE]
+87;[NON TRASFORMABILE]
+88;[NON TRASFORMABILE]
+89;[NON TRASFORMABILE]
+90;[NON TRASFORMABILE]
+91;[NON TRASFORMABILE]
+92;Can the automaton be described
+93;[NON TRASFORMABILE]
+94;[NON TRASFORMABILE]
+95;Can the transitions be described
+96;Can the transitions be described
+97;If the input is 11100 which result is produced
+98;If the input is 110 which result is produced
+99;Can the automaton be described
+100;[NON TRASFORMABILE]
+101;[NON TRASFORMABILE]
+102;[NON TRASFORMABILE]
+103;[NON TRASFORMABILE]
+104;[NON TRASFORMABILE]
+105;[NON TRASFORMABILE]
+106;Can all the transitions be listed
+107;The transitions should be described please
+108;[NON TRASFORMABILE]
+109;[NON TRASFORMABILE]
+110;[NON TRASFORMABILE]
+111;The transitions of the automaton should be shown to me
+112;[NON TRASFORMABILE]
+113;The automaton should be described
+114;The automaton should be briefly described
+115;The automaton should be briefly described
+116;[NON TRASFORMABILE]
+117;[NON TRASFORMABILE]
+118;[NON TRASFORMABILE]
+119;[NON TRASFORMABILE]
+120;[NON TRASFORMABILE]
+121;[NON TRASFORMABILE]
+122;[NON TRASFORMABILE]
+123;[NON TRASFORMABILE]
+124;[NON TRASFORMABILE]
+125;[NON TRASFORMABILE]
+126;[NON TRASFORMABILE]
+127;[NON TRASFORMABILE]
+128;[NON TRASFORMABILE]
+129;[NON TRASFORMABILE]
+130;[NON TRASFORMABILE]
+131;[NON TRASFORMABILE]
+132;[NON TRASFORMABILE]
+133;[NON TRASFORMABILE]
+134;The automaton should be briefly described to me
+135;A language allowing words made of an odd number of 0s and 1s is accepted by the automaton
+136;[NON TRASFORMABILE]
+137;If q2 were the final state the same language would be accepted by the automaton
+138;[NON TRASFORMABILE]
+139;[NON TRASFORMABILE]
+140;[NON TRASFORMABILE]
+141;[NON TRASFORMABILE]
+142;[NON TRASFORMABILE]
+143;[NON TRASFORMABILE]
+144;The automaton should be described
+145;[NON TRASFORMABILE]
+146;[NON TRASFORMABILE]
+147;[NON TRASFORMABILE]
+148;[NON TRASFORMABILE]
+149;[NON TRASFORMABILE]
+150;[NON TRASFORMABILE]
+151;[NON TRASFORMABILE]
+152;[NON TRASFORMABILE]
+153;[NON TRASFORMABILE]
+154;[NON TRASFORMABILE]
+155;[NON TRASFORMABILE]
+156;[NON TRASFORMABILE]
+157;[NON TRASFORMABILE]
+158;The automaton should be described to me
+159;[NON TRASFORMABILE]
+160;[NON TRASFORMABILE]
+161;[NON TRASFORMABILE]
+162;[NON TRASFORMABILE]
+163;The automaton should be briefly described and the number of states should be indicated
+164;The automaton should be briefly described
+165;[NON TRASFORMABILE]
+166;[NON TRASFORMABILE]
+167;[NON TRASFORMABILE]
+168;The optimal spatial representation of the automaton should be given according to understanding
+169;A language allowing words made of an odd number of 0s and 1s is accepted by the automaton
+170;[NON TRASFORMABILE]

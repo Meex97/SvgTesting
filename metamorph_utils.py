@@ -1,15 +1,15 @@
 import random
 import unicodedata
-import wn
 
-from utils import metamorph_sentence_synonyms, metamorph_sentence_synonyms_simple
+import config
+from utils import metamorph_sentence_synonyms_simple
 
 
 def filler_words(question):
     word_count = len(question.split())
     filler_words = ["uhm", "eh", "mmm"]
     metamorphed_qs = []
-    print("\nTest case: " + question + "\n____________________")
+    #print("\nTest case: " + question + "\n____________________")
 
     for i in range(1, word_count + 1):
         filler_pos = random.sample(range(0, word_count), i)
@@ -21,7 +21,7 @@ def filler_words(question):
             tmp_q += question.split()[x] + " "
 
         tmp_q = tmp_q[0].upper() + tmp_q[1:].lower()
-        print("Follow-up: " + tmp_q)
+        #print("Follow-up: " + tmp_q)
 
         metamorphed_qs.append(tmp_q)
 
@@ -65,7 +65,7 @@ def remove_doubles(question):
 
 
 def mistakes(question):
-    print("\nTest case: " + question + "\n____________________")
+    #print("\nTest case: " + question + "\n____________________")
     metamorphed_qs = []
 
     # no accents
@@ -78,10 +78,10 @@ def mistakes(question):
         print("Follow-up: " + tmp_q)
         metamorphed_qs.append(tmp_q)
 
-    # add accents
-    tmp_q = add_random_accents(question)
-    print("Follow-up: " + tmp_q)
-    metamorphed_qs.append(tmp_q)
+    # add accents todo: not for english
+    # tmp_q = add_random_accents(question)
+    # print("Follow-up: " + tmp_q)
+    # metamorphed_qs.append(tmp_q)
 
     # remove double consonants
     tmp_q = remove_doubles(question)
@@ -93,29 +93,35 @@ def mistakes(question):
 
 
 def synonyms(question):
-    print("\nTest case: " + question + "\n____________________")
+    # print("\nTest case: " + question + "\n____________________")
     #return metamorph_sentence_synonyms(question)
     return metamorph_sentence_synonyms_simple(question)
 
 
 def active_passive(question_number):
-    file_path = "res/active_passive_corpus.txt"
+    file_path = "res/active_passive_corpus_states.txt"
+
+    metamorphed_qs = []
 
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            for i, line in enumerate(f, 1):
-                question = line.strip()
-                if question_number == i:
-                    return [question]
+            for line in f:
+                tmp_line = line.strip()
+                question = tmp_line.split(";")[1].strip()
+                number = int(tmp_line.split(";")[0].strip())
+                if question_number == number and question != "[NON TRASFORMABILE]":
+                    metamorphed_qs.append(question)
 
     except FileNotFoundError:
         print(f"file '{file_path}' not found.")
     except Exception as e:
         print(f"Error reading file: {e}")
 
+    return metamorphed_qs
+
 
 def inversion_anastrophe(question_number):
-    file_path = "res/inversion_corpus.txt"
+    file_path = "res/inversion_corpus_states.txt"
     metamorphed_qs = []
 
     try:
