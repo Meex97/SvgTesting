@@ -2,7 +2,7 @@ import random
 import unicodedata
 
 import config
-from utils import metamorph_sentence_synonyms_simple
+from utils import *
 
 
 def filler_words(question):
