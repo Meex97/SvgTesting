@@ -1,0 +1,66 @@
+Can you describe me the automaton?;The automaton accepts zero or more words formed by a sequence of the type 11000. In total there are 5 states: q0, q1, q2, q3 e q4. q0 is both the initial and the final state. The transitions are: q0 with value 1 goes to q1, q1 with value 1 goes to q2, q2 with value 0 goes to q3, q3 with value 0 goes to q4, q4 with value 0 goes to q0.;7;8;6
+How many states does the automaton have, and what are they?;The automaton has 5 states: q0, q1, q2, q3 and q4.;10;10;10
+How many transitions does the automaton have, and what are their values?;The automaton has 5 transitions: q0 with value 1 goes to q1, q1 with value 1 goes to q2, q2 with value 0 goes to q3, q3 with value 0 goes to q4, q4 with value 0 goes to q0.;10;9;10
+Which is the initial state?;The initial state is q0.;10;10;10
+Which is the final state?;The final state is q0.;10;9;10
+How many states and transitions does the automaton have?;The automaton has 5 states and 5 transitions.;10;8;7
+What is the initial state and what is the final state?;q0 is the initial and the final state.;10;9;10
+Is there a transition between q0 and q0?;There is no transition between q0 and q0.;10;9;8
+Is there a transition between q0 and q1?;The transition from q0 to q1 has value 1.;10;9;8
+Is there a transition between q0 and q2?;There is no transition between q0 and q2.;10;9;8
+Is there a transition between q0 and q3?;There is no transition between q0 and q3.;10;9;8
+Is there a transition between q4 and q0?;The transition from q4 to q0 has value 0.;10;8;9
+Is there a transition between q0 and q1?;The transition from q0 to q1 has value 1.;10;9;8
+Is there a transition between q1 and q1?;There is no transition between q1 and q1.;10;9;8
+Is there a transition between q1 and q2?;The transition from q1 to q2 has value 1.;10;9;8
+Is there a transition between q1 and q3?;There is no transition between q1 and q3.;10;9;8
+Is there a transition between q1 and q4?;There is no transition between q1 and q4.;10;9;8
+Is there a transition between q2 and q0?;There is no transition between q2 and q0.;10;9;8
+Is there a transition between q1 and q2?;The transition from q1 to q2 has value 1.;10;9;8
+Is there a transition between q2 and q2?;There is no transition between q2 and q2.;10;9;8
+Is there a transition between q2 and q3?;The transition from q2 to q3 has value 0.;10;8;6
+Is there a transition between q2 and q4?;There is no transition between q2 and q4.;10;9;8
+Is there a transition between q3 and q0?;There is no transition between q3 and q0.;10;9;8
+Is there a transition between q3 and q1?;There is no transition between q3 and q1.;10;9;8
+Is there a transition between q2 and q3?;The transition from q2 to q3 has value 0.;10;8;6
+Is there a transition between q3 and q3?;There is no transition between q3 and q3.;10;9;8
+Is there a transition between q3 and q4?;The transition from q3 to q4 has value 0.;10;8;9
+Is there a transition between q4 and q0?;The transition from q4 to q0 has value 0.;10;8;9
+Is there a transition between q4 and q1?;There is no transition between q4 and q1.;10;9;8
+Is there a transition between q4 and q2?;There is no transition between q4 and q2.;10;9;8
+Is there a transition between q3 and q4?;The transition from q3 to q4 has value 0.;10;8;9
+Is there a transition between q4 and q4?;There is no transition between q4 and q4.;10;9;8
+What is the value of the between q0 and q0?;there is no transition between q0 and q0.;9;8;6
+What is the value of the between q0 and q1?;The transition between q0 and q1 is with value 1.;10;10;10
+What is the value of the between q0 and q2?;there is no transition between q0 and q2.;9;8;6
+What is the value of the between q0 and q3?;there is no transition between q0 and q3.;9;8;6
+What is the value of the between q0 and q4?;there is no transition between q0 and q4.;9;8;6
+What is the value of the between q1 and q0?;there is no transition between q1 and q0.;10;9;8
+What is the value of the between q1 and q1?;there is no transition between q1 and q1.;10;8;6
+What is the value of the between q1 and q2?;The transition between q1 and q2 is with value 1.;10;9;10
+What is the value of the between q1 and q3?;there is no transition between q1 and q3.;10;8;9
+What is the value of the between q1 and q4?;there is no transition between q1 and q4.;10;8;9
+What is the value of the between q2 and q0?;there is no transition between q2 and q0.;10;9;8
+What is the value of the between q2 and q1?;there is no transition between q2 and q1.;10;8;9
+What is the value of the between q2 and q2?;there is no transition between q2 and q2.;10;9;8
+What is the value of the between q2 and q3?;The transition between q2 and q3 is with value 0.;10;9;10
+What is the value of the between q2 and q4?;there is no transition between q2 and q4.;10;9;8
+What is the value of the between q3 and q0?;there is no transition between q3 and q0.;10;9;8
+What is the value of the between q3 and q1?;there is no transition between q3 and q1.;10;9;8
+What is the value of the between q3 and q2?;there is no transition between q3 and q2.;10;9;8
+What is the value of the between q3 and q3?;there is no transition between q3 and q3.;10;9;8
+What is the value of the between q3 and q4?;The transition between q3 and q4 is with value 0.;10;9;10
+What is the value of the between q4 and q0?;The transition between q4 and q0 is with value 0.;10;8;6
+What is the value of the between q4 and q1?;there is no transition between q4 and q1.;10;9;8
+What is the value of the between q4 and q2?;there is no transition between q4 and q2.;10;9;8
+What is the value of the between q4 and q3?;there is no transition between q4 and q3.;10;8;6
+What is the value of the between q4 and q4?;there is no transition between q4 and q4.;10;9;8
+Does state q0 exist?;The state q0 exists.;10;10;10
+Does state q1 exist?;The state q1 exists.;10;10;10
+Does state q2 exist?;The state q2 exists.;10;10;10
+Does state q3 exist?;The state q3 exists.;10;10;10
+Does state q4 exist?;The state q4 exists.;10;10;10
+Which is the initial state?;The initial state is q0.;10;10;10
+Which is the final state?;The final state is q0.;10;9;8
+How many states does this automaton have?;This automaton has 5 states;10;10;10
+How many states does this automaton have?;There are 5 states in this automaton.;10;9;10

@@ -1,0 +1,66 @@
+Can you describe me the automaton?;The automaton accepts zero or more words formed by a sequence of the type 11000. ;5;6;4
+Can you describe me the automaton?;The automaton accepts zero or more words formed by a sequence of the type 11000. In total there are 5 states: q0, q1, q2, q3 e q4. q0 is both the initial and the final state.;6;7;5
+How many states does the automaton have, and what are they;?The automaton has 3 states: ;0;5;2
+How many states does the automaton have, and what are they?;The automaton has 3 states: q0, q1, q2, ;2;5;2
+How many transitions does the automaton have, and what are their values?;The automaton has 3 transitions: ;3;4;2
+How many transitions does the automaton have, and what are their values?;The automaton has 3 transitions: q0 with value 1 goes to q1, q1 with value 1 goes to q2, q2 with value 0 goes to q3, q3 with value 0 goes to q4, ;5;6;4
+How many states and transitions does the automaton have?;The automaton has 7 states and 9 transitions.;0;2;0
+Is there a transition between q0 and q0?;There are transitions between q0 and q0 in both directions: q0->q0 = 5, q0->q0 = 8.;2;3;2
+Is there a transition between q0 and q1?;The transition from q0 to q1 has value 10.;2;3;2
+Is there a transition between q0 and q2?;There are transitions between q0 and q2 in both directions: q0->q2 = 5, q2->q0 = 8.;2;3;2
+Is there a transition between q0 and q3?;There are transitions between q0 and q3 in both directions: q0->q3 = 5, q3->q0 = 8.;2;3;2
+Is there a transition between q4 and q0?;The transition from q4 to q0 has value 00.;10;8;6
+Is there a transition between q0 and q1?;The transition from q0 to q1 has value 10.;2;3;2
+Is there a transition between q1 and q1?;There are transitions between q1 and q1 in both directions: q1->q1 = 5, q1->q1 = 8.;2;3;1
+Is there a transition between q1 and q2?;The transition from q1 to q2 has value 10.;2;3;2
+Is there a transition between q1 and q3?;There are transitions between q1 and q3 in both directions: q1->q3 = 5, q3->q1 = 8.;2;3;1
+Is there a transition between q1 and q4?;There are transitions between q1 and q4 in both directions: q1->q4 = 5, q4->q1 = 8.;2;3;1
+Is there a transition between q2 and q0?;There are transitions between q2 and q0 in both directions: q2->q0 = 5, q0->q2 = 8.;2;3;1
+Is there a transition between q1 and q2?;The transition from q1 to q2 has value 10.;2;3;1
+Is there a transition between q2 and q2?;There are transitions between q2 and q2 in both directions: q2->q2 = 5, q2->q2 = 8.;2;3;2
+Is there a transition between q2 and q3?;The transition from q2 to q3 has value 00.;5;4;3
+Is there a transition between q2 and q4?;There are transitions between q2 and q4 in both directions: q2->q4 = 5, q4->q2 = 8.;2;3;1
+Is there a transition between q3 and q0?;There are transitions between q3 and q0 in both directions: q3->q0 = 5, q0->q3 = 8.;2;3;1
+Is there a transition between q3 and q1?;There are transitions between q3 and q1 in both directions: q3->q1 = 5, q1->q3 = 8.;2;3;1
+Is there a transition between q2 and q3?;The transition from q2 to q3 has value 00.;5;4;3
+Is there a transition between q3 and q3?;There are transitions between q3 and q3 in both directions: q3->q3 = 5, q3->q3 = 8.;2;3;1
+Is there a transition between q3 and q4?;The transition from q3 to q4 has value 00.;10;8;6
+Is there a transition between q4 and q0?;The transition from q4 to q0 has value 00.;10;8;9
+Is there a transition between q4 and q1?;There are transitions between q4 and q1 in both directions: q4->q1 = 5, q1->q4 = 8.;2;3;1
+Is there a transition between q4 and q2?;There are transitions between q4 and q2 in both directions: q4->q2 = 5, q2->q4 = 8.;2;3;1
+Is there a transition between q3 and q4?;The transition from q3 to q4 has value 00.;10;8;6
+Is there a transition between q4 and q4?;There are transitions between q4 and q4 in both directions: q4->q4 = 5, q4->q4 = 8.;2;3;2
+What is the value of the between q0 and q0?;The transition between q0 and q0 is with value 5.;2;3;1
+What is the value of the between q0 and q1?;there is no transition between q0 and q1.;2;5;3
+What is the value of the between q0 and q2?;The transition between q0 and q2 is with value 5.;0;2;1
+What is the value of the between q0 and q3?;The transition between q0 and q3 is with value 5.;0;2;1
+What is the value of the between q0 and q4?;The transition between q0 and q4 is with value 5.;2;3;1
+What is the value of the between q1 and q0?;The transition between q1 and q0 is with value 5.;2;3;1
+What is the value of the between q1 and q1?;The transition between q1 and q1 is with value 5.;2;3;2
+What is the value of the between q1 and q2?;there is no transition between q1 and q2.;2;5;3
+What is the value of the between q1 and q3?;The transition between q1 and q3 is with value 5.;0;2;1
+What is the value of the between q1 and q4?;The transition between q1 and q4 is with value 5.;2;3;1
+What is the value of the between q2 and q0?;The transition between q2 and q0 is with value 5.;2;3;2
+What is the value of the between q2 and q1?;The transition between q2 and q1 is with value 5.;0;2;1
+What is the value of the between q2 and q2?;The transition between q2 and q2 is with value 5.;2;3;1
+What is the value of the between q2 and q3?;there is no transition between q2 and q3.;9;8;6
+What is the value of the between q2 and q4?;The transition between q2 and q4 is with value 5.;0;2;1
+What is the value of the between q3 and q0?;The transition between q3 and q0 is with value 5.;2;3;1
+What is the value of the between q3 and q1?;The transition between q3 and q1 is with value 5.;0;2;1
+What is the value of the between q3 and q2?;The transition between q3 and q2 is with value 5.;0;2;1
+What is the value of the between q3 and q3?;The transition between q3 and q3 is with value 5.;2;3;2
+What is the value of the between q3 and q4?;there is no transition between q3 and q4.;9;8;6
+What is the value of the between q4 and q0?;there is no transition between q4 and q0.;9;8;6
+What is the value of the between q4 and q1?;The transition between q4 and q1 is with value 5.;2;3;1
+What is the value of the between q4 and q2?;The transition between q4 and q2 is with value 5.;0;2;1
+What is the value of the between q4 and q3?;The transition between q4 and q3 is with value 5.;0;2;1
+What is the value of the between q4 and q4?;The transition between q4 and q4 is with value 5.;2;3;2
+Does state q0 exist?;The state q0 does not exist.;0;5;2
+Does state q1 exist?;The state q1 does not exist.;10;8;5
+Does state q2 exist?;The state q2 does not exist.;10;8;5
+Does state q3 exist?;The state q3 does not exist.;10;8;5
+Does state q4 exist?;The state q4 does not exist.;10;8;5
+Which is the initial state?;The initial state does not exist.;0;2;1
+Which is the final state?;The final state does not exist.;2;5;3
+How many states does this automaton have?;This automaton has 6 states;2;5;3
+How many states does this automaton have?;This automaton has 6 states;2;5;3

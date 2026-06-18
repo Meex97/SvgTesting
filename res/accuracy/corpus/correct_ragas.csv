@@ -1,0 +1,66 @@
+Can you describe me the automaton?;The automaton accepts zero or more words formed by a sequence of the type 11000. In total there are 5 states: q0, q1, q2, q3 e q4. q0 is both the initial and the final state. The transitions are: q0 with value 1 goes to q1, q1 with value 1 goes to q2, q2 with value 0 goes to q3, q3 with value 0 goes to q4, q4 with value 0 goes to q0.;1.0;0.8314009998850027;1.0
+How many states does the automaton have, and what are they?;The automaton has 5 states: q0, q1, q2, q3 and q4.;1.0;0.9749095877864865;0.9999998681957888
+How many transitions does the automaton have, and what are their values?;The automaton has 5 transitions: q0 with value 1 goes to q1, q1 with value 1 goes to q2, q2 with value 0 goes to q3, q3 with value 0 goes to q4, q4 with value 0 goes to q0.;1.0;0.9704373121610337;0.9999987540395054
+Which is the initial state?;The initial state is q0.;1.0;0.9847839466719198;1.0
+Which is the final state?;The final state is q0.;1.0;0.9463324842283406;1.0
+How many states and transitions does the automaton have?;The automaton has 5 states and 5 transitions.;1.0;1.0;1.0
+What is the initial state and what is the final state?;q0 is the initial and the final state.;1.0;0.8117879326379318;1.0
+Is there a transition between q0 and q0?;There is no transition between q0 and q0.;1.0;0.9555707124061797;1.0
+Is there a transition between q0 and q1?;The transition from q0 to q1 has value 1.;1.0;0.9396444043667923;1.0
+Is there a transition between q0 and q2?;There is no transition between q0 and q2.;1.0;1.0;1.0
+Is there a transition between q0 and q3?;There is no transition between q0 and q3.;1.0;0.9999989194218406;1.0
+Is there a transition between q4 and q0?;The transition from q4 to q0 has value 0.;1.0;0.9455515112745714;1.0
+Is there a transition between q0 and q1?;The transition from q0 to q1 has value 1.;1.0;0.9396677887478411;1.0
+Is there a transition between q1 and q1?;There is no transition between q1 and q1.;1.0;1.0;1.0
+Is there a transition between q1 and q2?;The transition from q1 to q2 has value 1.;1.0;0.9327112327672191;0.75
+Is there a transition between q1 and q3?;There is no transition between q1 and q3.;1.0;0.9999988167436895;1.0
+Is there a transition between q1 and q4?;There is no transition between q1 and q4.;1.0;0.9998568359373423;0.9999998105219967
+Is there a transition between q2 and q0?;There is no transition between q2 and q0.;1.0;1.0;1.0
+Is there a transition between q1 and q2?;The transition from q1 to q2 has value 1.;1.0;0.9327112327672191;0.9999998136907728
+Is there a transition between q2 and q2?;There is no transition between q2 and q2.;1.0;0.0;0.999999738051663
+Is there a transition between q2 and q3?;The transition from q2 to q3 has value 0.;1.0;0.937516979054514;1.0
+Is there a transition between q2 and q4?;There is no transition between q2 and q4.;1.0;1.0000000000000002;0.9999996100936481
+Is there a transition between q3 and q0?;There is no transition between q3 and q0.;1.0;0.9999999999999998;0.9999996833265699
+Is there a transition between q3 and q1?;There is no transition between q3 and q1.;1.0;0.9999999999999999;1.0
+Is there a transition between q2 and q3?;The transition from q2 to q3 has value 0.;1.0;0.9374902314895496;1.0
+Is there a transition between q3 and q3?;There is no transition between q3 and q3.;1.0;0.0;0.9999997093590975
+Is there a transition between q3 and q4?;The transition from q3 to q4 has value 0.;1.0;0.9269362583006715;0.9999995617266106
+Is there a transition between q4 and q0?;The transition from q4 to q0 has value 0.;1.0;0.9455915575530301;0.9999995931275586
+Is there a transition between q4 and q1?;There is no transition between q4 and q1.;1.0;0.9999982419048794;1.0
+Is there a transition between q4 and q2?;There is no transition between q4 and q2.;1.0;1.0;1.0
+Is there a transition between q3 and q4?;The transition from q3 to q4 has value 0.;1.0;0.9269362583006715;1.0
+Is there a transition between q4 and q4?;There is no transition between q4 and q4.;1.0;1.0;0.9999997083401481
+What is the value of the between q0 and q0?;there is no transition between q0 and q0.;1.0;0.8545491744759031;0.9999995346959867
+What is the value of the between q0 and q1?;The transition between q0 and q1 is with value 1.;1.0;0.9467531225106544;1.0
+What is the value of the between q0 and q2?;there is no transition between q0 and q2.;1.0;0.8944735067107946;1.0
+What is the value of the between q0 and q3?;there is no transition between q0 and q3.;1.0;0.8885406683208478;1.0
+What is the value of the between q0 and q4?;there is no transition between q0 and q4.;1.0;0.897155405768219;0.9999996839732065
+What is the value of the between q1 and q0?;there is no transition between q1 and q0.;1.0;0.9066055448917889;0.9999997171066384
+What is the value of the between q1 and q1?;there is no transition between q1 and q1.;1.0;0.9009103316406438;1.0
+What is the value of the between q1 and q2?;The transition between q1 and q2 is with value 1.;1.0;0.9460624080338177;0.9999999999999999
+What is the value of the between q1 and q3?;there is no transition between q1 and q3.;1.0;0.8938423139170822;1.0
+What is the value of the between q1 and q4?;there is no transition between q1 and q4.;1.0;0.8990554275291791;0.9999980626654226
+What is the value of the between q2 and q0?;there is no transition between q2 and q0.;1.0;0.9105142889266669;0.9999997710298962
+What is the value of the between q2 and q1?;there is no transition between q2 and q1.;1.0;0.8978716695982871;0.9999997643052932
+What is the value of the between q2 and q2?;there is no transition between q2 and q2.;1.0;0.0;0.9999998431724852
+What is the value of the between q2 and q3?;The transition between q2 and q3 is with value 0.;1.0;0.9516683369384896;0.9999997531089375
+What is the value of the between q2 and q4?;there is no transition between q2 and q4.;1.0;0.9020648994155329;1.0
+What is the value of the between q3 and q0?;there is no transition between q3 and q0.;1.0;0.9090227073947924;1.0
+What is the value of the between q3 and q1?;there is no transition between q3 and q1.;1.0;0.8905620295855344;1.0
+What is the value of the between q3 and q2?;there is no transition between q3 and q2.;1.0;0.8974358900953944;0.9999995769921501
+What is the value of the between q3 and q3?;there is no transition between q3 and q3.;1.0;0.9009572145753892;1.0
+What is the value of the between q3 and q4?;The transition between q3 and q4 is with value 0.;1.0;0.9484953659094838;1.0
+What is the value of the between q4 and q0?;The transition between q4 and q0 is with value 0.;1.0;0.9567673191707048;0.9999806291102088
+What is the value of the between q4 and q1?;there is no transition between q4 and q1.;1.0;0.8996466230268749;1.0
+What is the value of the between q4 and q2?;there is no transition between q4 and q2.;1.0;0.9059030616361414;1.0
+What is the value of the between q4 and q3?;there is no transition between q4 and q3.;1.0;0.8996466230268749;1.0
+What is the value of the between q4 and q4?;there is no transition between q4 and q4.;1.0;0.9059030616361414;1.0
+Does state q0 exist?;The state q0 exists.;1.0;0.9931864040364697;0.9999169323782733
+Does state q1 exist?;The state q1 exists.;1.0;0.993347722032262;0.9999999999999999
+Does state q2 exist?;The state q2 exists.;1.0;0.9921219357764914;1.0
+Does state q3 exist?;The state q3 exists.;1.0;0.9927796396190893;1.0
+Does state q4 exist?;The state q4 exists.;1.0;0.9914366264391822;1.0
+Which is the initial state?;The initial state is q0.;1.0;0.9847839466719198;1.0
+Which is the final state?;The final state is q0.;1.0;0.9462831330565395;1.0
+How many states does this automaton have?;This automaton has 5 states;1.0;0.9999999999999998;1.0
+How many states does this automaton have?;There are 5 states in this automaton.;1.0;0.9815315619260115;1.0

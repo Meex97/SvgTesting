@@ -1,4 +1,5 @@
 import csv
+import json
 import re
 import xml.etree.ElementTree as ET
 import random
@@ -232,17 +233,17 @@ def compare_ranks(ground_truth_list, comparison_list):
 
 
 def randomize_intent(intent):
-    intent_list = ["fsa-theoretical", "fsapractical", "Null"]
+    intent_list = ["fsa-theoretical", "fsa-practical", "None"]
 
     available = [i for i in intent_list if i != intent]
     new = random.choice(available)
-    print(intent + " ---> " + new)
+    print(f"{intent} ---> {new}")
 
     return new
 
 
 def randomize_argument(argument):
-    argument_list = ["Automata", "Language", "Pattern", "State", "Transition", "Null"]
+    argument_list = ["Automaton", "Language", "Pattern", "State", "Transition", "Alphabet", "None"]
 
     available = [i for i in argument_list if i != argument]
     new = random.choice(available)
@@ -264,13 +265,81 @@ def randomize_dialogue_act(dialogue_act):
 
 
 #TODO
-def randomize_frame(dialogue_act):
-    dialogue_act_list = ["AutoF:autoNegative", "DS:opening, SOM:initGreeting", "DS:suggest, OCM:selfCorrection",
-                         "SOM:initGoodbye", "SOM:returnGreeting", "SOM:thanking", "Ta:answer", "Ta:checkQuestion",
-                         "Ta:propositionalQuestion", "Ta:request", "Ta:setQuestion", "TuM:turnAccept"]
+def randomize_frame(frame):
 
-    available = [i for i in dialogue_act_list if i != dialogue_act]
-    new = random.choice(available)
-    print(dialogue_act + " ---> " + new)
+    frame_list = {
+        "alphabet": ["?", "[“1”,“0”]", "[“2”,“4”]"],
+        "automatonType": ["deterministic", "nonDeterministic", "finite", "?"],
+        "finalStates": ["[“Q1”, “Q2”]", "[“Q3”]", "?"],
+        "graphicRepresentation": ["pentagon", "triangle", "?"],
+        "initialState": ["[“Q1”, “Q2”]", "[“Q3”]", "?"],
+        "input": ["11000","1100011000", "?", "[0,1]", "not 11100", "symbol", "longerThanThreeOnesFollowedByTwoZeros", "differenceBetweenDeterministicAndNonDeterministicFSA", "notMatching"],
+        "languageType": ["deterministic", "non-regular", "regular"],
+        "numberOfFinalStates": ["2", "5", "?"],
+        "numberOfStates": ["2", "5", "?"],
+        "numberOfTransitions": ["2", "7", "?"],
+        "optimalSpatialRepresentation": ["?"],
+        "output": ["accepted", "denied", "?"],
+        "patternType": ["clockwise", "anti-clockwise", "?"],
+        "patternExistence": ["?"],
+        "stateFrom": ["q3", "?"],
+        "stateTo": ["q1", "?"],
+        "stateWithMostTransitions": ["q3", "?"],
+        "stateWithoutTransitions": ["q3", "?"],
+        "states": ["q1", "q2", "?"],
+        "transitions": ["[“Q0”,“Q1”,“1”]", "[“Q1”,“Q2”,“0”]", "[“?”,“Q4”,“?”]", "[“Q1”,“?”,“?”]", "[“Q1”,“Q2”,“?”]", "?"]
+    }
 
-    return new
+    if isinstance(frame, dict):
+        data = frame
+    else:
+        try:
+            data = json.loads(frame)
+        except Exception:
+            key = random.choice(list(frame_list.keys()))
+            val = random.choice(frame_list[key])
+            return json.dumps({key: val}, indent=4)
+
+    result = data.copy()
+
+    key = random.choice(list(frame_list.keys()))
+    val = random.choice(frame_list[key])
+    return json.dumps({key: val}, indent=4)
+
+
+    # Operazioni possibili
+    #operations = ["add", "delete"]
+
+    # Non eliminare se vuoto
+    #if not result:
+    #    operations.remove("delete")
+
+    #op = random.choice(operations)
+
+    # -------- MODIFY --------
+    #tag = random.choice(list(result.keys()))
+
+    #if tag in frame_list:
+    #    possible_vals = frame_list[tag]
+    #    new_vals = [v for v in possible_vals if v != result[tag]]
+    #    if new_vals:
+    #        result[tag] = random.choice(new_vals)
+
+    # -------- ADD --------
+    #elif op == "add":
+    #    possible_tags = [k for k in frame_list.keys() if k not in result]
+    #    if possible_tags:
+    #        tag = random.choice(possible_tags)
+    #        result[tag] = random.choice(frame_list[tag])
+
+    # -------- DELETE --------
+    #elif op == "delete" and len(result) > 1:
+    #    tag_to_delete = random.choice(list(result.keys()))
+    #    del result[tag_to_delete]
+
+    # Ritorna come JSON string
+    #print(frame)
+    #print("\n ----- ")
+    #print(json.dumps(result, indent=4))
+
+    #return json.dumps(result, indent=4)

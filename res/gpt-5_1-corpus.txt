@@ -1,0 +1,30 @@
+What does it mean that q0 is both an initial and a final state in this automaton?
+Can you show me an example of an input sequence that starts at q0 and comes back to q0?
+Is it possible to go directly from q2 to q4 in this machine?
+What is the value of the transition from q1 to q2 in the diagram?
+Why are there no arrows labeled 0 leaving q0 in this automaton?
+If I input the sequence 1, 1, 0, 0, 0, which states will the automaton visit step by step?
+What happens if the automaton is in q2 and the input symbol is 1 instead of 0?
+How do I know which states are final states just by looking at the picture?
+What does it mean when there is no transition defined for a certain input from a state?
+Is this automaton deterministic or non-deterministic, and how can I tell?
+What kind of language does this finite state machine recognize?
+Why is the initial state usually drawn with an incoming arrow from nowhere?
+Can an automaton have more than one initial state, or is there always just one?
+What is the difference between a state and a transition in this diagram?
+If I only input zeros from q0, will the automaton ever leave q0 in this example?
+How can I check if a given input string is accepted by this automaton?
+What does “accepted” or “rejected” mean in the context of finite state machines?
+Is there any way from q1 to return directly to q0 in this particular automaton?
+Why do we use labels like q0, q1, q2 instead of more descriptive names for states?
+If I change the value on the transition from q2 to q3 from 0 to 1, how would that affect the language?
+How do I know when to stop reading the input in a finite state machine?
+What is the purpose of having multiple final states in some automata, when here only q0 is final?
+Can a transition ever have more than one input symbol on the same arrow?
+How would I modify this automaton so that q4 is also a final state?
+What is the difference between a finite state machine and a regular expression?
+Can this automaton recognize all possible binary strings, or only some of them?
+How do I convert this state diagram into a transition table?
+What does “finite” mean in “finite state machine”?
+If I start in q0 and read the input 11000 twice in a row, will I always end up in q0 again?
+Why are finite state machines important in computer science and real-world applications?

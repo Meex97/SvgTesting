@@ -1,0 +1,30 @@
+What do the circles labeled q0, q1, q2, q3, and q4 represent in this diagram?
+Why does q0 have two circles around it while the others only have one?
+What does the arrow with the word “start” pointing to q0 mean?
+What do the numbers 0 and 1 written on the arrows between the circles represent?
+Is it possible to go directly from q2 to q4 in this machine?
+Can I go from q4 back to q1, or is the only way back through q0?
+Why is there an arrow from q4 back to q0 with a 0 on it?
+Is q0 the only accepting state in this diagram, or are there others?
+What is the difference between a start state and an accepting (final) state?
+How do I know which inputs will be accepted by this finite state machine?
+If I start at q0 and the input is 1, 1, 0, 0, 0, which states will I visit in order?
+What happens if the input is 0 when we are at q0, since I don’t see a 0-arrow from q0?
+Why are there only 0s and 1s on the arrows; can a finite state machine use other symbols?
+What is the formal name of this kind of diagram with circles and arrows?
+How do I know if this finite state machine is deterministic or non-deterministic?
+What does it mean for a finite state machine to “accept” or “reject” an input string?
+Can you explain what a “state” is in simple terms, using an everyday example?
+How would I write the transition function for this machine using a table or equations?
+What kind of pattern of 0s and 1s is this particular machine recognizing?
+How can I tell if there are any unreachable states in this diagram?
+What would happen if we added another arrow from q2 to q4 with a 1 on it?
+Is it allowed for a state to have two outgoing arrows with the same label in a deterministic machine?
+How many different input strings of length 3 will lead me to the accepting state q0?
+What is the difference between a finite state machine and a regular expression?
+Can a finite state machine remember how many 1s it has seen, or is its memory limited?
+How would I modify this diagram to make q2 also an accepting state?
+What does “finite” mean in “finite state machine,” and why is that important?
+How is this concept used in real life, like in computers or everyday devices?
+If I wanted this machine to accept strings ending in “100”, how would I need to change the states or arrows?
+What’s the difference between a Mealy machine and a Moore machine, and which type is this diagram showing?

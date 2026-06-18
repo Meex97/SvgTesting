@@ -6,6 +6,7 @@ import re
 
 from openai import OpenAI
 
+from collections import defaultdict
 import ragas_utils
 import utils
 from metamorph_utils import *
@@ -351,7 +352,7 @@ def generate_test_GPT(domain_description, n=30):
     prompt = f"""
         I describe you a system: {domain_description}.
         
-        Tell me one natural questions that a high school student learning finite state machine for the first time might ask this system. 
+        Tell me five natural questions that a high school student learning finite state machine for the first time might ask this system. 
         The question should be both about the image shown (eg. is it possible to go from q2 to q4?, what is the value of the transition from q1 to q2?) and more general concepts.
         The question should try to expose failures in the system / cases where the system doesn't respond properly to the question.
         The system replies to questions extracting from the user input elements related to four categories of a frame and then uses just this frame filled with information to find the best matching answer.
@@ -441,10 +442,15 @@ def generate_test_GPT(domain_description, n=30):
         response: “slot names”: [“finalStates”], “slot values”: [“?”]
         
 
-        Generate one simple question. Is must be a single sentence containing only one request. Do not produce multi-part or compound questions. 
-        Examples of the format: ‘How many states does the automaton have?’, ‘What happens when reading 101 from state q2?’. 
+        Generate one simple question. They must be a single sentence containing only one request. Do not produce multi-part or compound questions. 
+        Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;... 
         Avoid long or step-by-step questions.
         """
+
+    # Generate five simple question, as different from each other as possible, separated by the symbol ";". They must be a single sentence containing only one request. Do not produce multi-part or compound questions.
+    #         Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
+    #         Avoid long or step-by-step questions.
+
 
     response = client.chat.completions.create(
         model="gpt-5.1",
@@ -1081,7 +1087,8 @@ def generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act, nlu_f
             I describe you a system: {system_domain}. This system uses a dialogue system that leverages an LLM in its NLU part to generate a frame.
 
             Given a frame composed as follows: dialogue act = {nlu_dialogue_act}, argument = {nlu_argument}, intent = {nlu_intent} and slots = {nlu_frame}.
-            generate a sentence that causes the extraction system to generate that frame, consider the following prompts used to extract parts of the frame
+            generate a sentence that causes the extraction system to generate that frame, consider the following prompts used to extract parts of the frame.
+            Reply only with the generated phrase.
 
             The dialogue act is extracted with this prompt: Given the label “dialogue act” and the following possible values: AutoF:autoNegative,
             DS:opening, SOM:initGreeting, DS:suggest, OCM:selfCorrection, SOM:initGoodbye,
@@ -1182,6 +1189,95 @@ def generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act, nlu_f
     return text
 
 
+def ea_1_1(metric, file):
+    tot_mutations = 0
+    best_fail = 10
+    no_improve = 0
+    budget = 15
+    tot_fails = []
+    next_mutable = ""
+
+    generated_question = generate_test_GPT(system_domain)
+
+    while no_improve < 5 and tot_mutations < budget:
+        tot_mutations += 1
+        print("Tot mutations: ", tot_mutations)
+
+        generated_answer = get_dialogue_answer_states(generated_question, file_name = file)
+        generated_result = llm_judge_response(generated_question, generated_answer["response"])
+
+        if list(generated_result.values())[metric] <= best_fail:
+            no_improve = 0
+            best_fail = list(generated_result.values())[metric]
+            next_mutable = generated_answer
+        else:
+            no_improve += 1
+
+        if list(generated_result.values())[metric] <= 0.3:
+            tot_fails.append([generated_question, list(generated_result.values())[metric]])
+
+        nlu_intent = next_mutable["nlu_output"]["intent"]
+        nlu_argument = next_mutable["nlu_output"]["argument"]
+        nlu_dialogue_act = next_mutable["nlu_output"]["dialogue_act"]
+        nlu_frame = next_mutable["nlu_output"]["frame"]
+
+        r = random.randint(0, 3)
+        match r:
+            case 0:
+                nlu_intent = randomize_intent(nlu_intent)
+            case 1:
+                nlu_argument = randomize_argument(nlu_argument)
+            case 2:
+                nlu_dialogue_act = randomize_dialogue_act(nlu_dialogue_act)
+            case 3:
+                nlu_frame = randomize_frame(nlu_frame)
+            case 4:
+                #  todo multimodal switch (con prob 50% dopo gli altri)
+                print("todo multimodal switch")
+        generated_question = generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act, nlu_frame)
+        print("No improvement: " + str(no_improve) + " - Total fails (<= 0.3): " + str(len(tot_fails)))
+
+    print("_____ ALL FAILS _____: ", tot_fails)
+
+
+def get_slots():
+    with open("res/results/0.csv", newline="", encoding="latin1") as csvfile:
+        set_intent = set()
+        set_argument = set()
+        set_dialogue_act = set()
+        dict_frame = defaultdict(set)
+
+        reader = csv.reader(csvfile, delimiter=";")
+        i = 0
+        for row in reader:
+            if i == 0:
+                i += 1
+            else:
+                frame_in = ast.literal_eval(row[1])
+                frame_out = ast.literal_eval(row[2])
+
+                set_intent.add(frame_in.get("intent"))
+                set_intent.add(frame_out.get("intent"))
+
+                set_argument.add(frame_in.get("argument"))
+                set_argument.add(frame_out.get("argument"))
+
+                set_dialogue_act.add(frame_in.get("dialogue_act"))
+                set_dialogue_act.add(str(frame_out.get("dialogue_acts_list")))
+
+                for frame in [frame_in.get("frame"), frame_out.get("correctedFrame")]:
+                    if frame:
+                        for key, value in frame.items():
+                            dict_frame[key].add(str(value))
+
+        print("intent:", set_intent)
+        print("argument:", set_argument)
+        print("dialogue_act:", set_dialogue_act)
+        print("frame:", dict_frame)
+
+
+
+
 if __name__ == "__main__":
     #main()
     #main_states()
@@ -1250,36 +1346,14 @@ if __name__ == "__main__":
     #check_mr_res()
 
     #compare_LLM_results("res/accuracy/corpus/ragas_metamorphed_gpt5.csv", "res/accuracy/corpus/metamorphed_gpt5_1.csv")
+    
+    #get_slots()
 
-    for i in range(5):
-        print("\n\n\n" + str(i))
-        generated_question = generate_test_GPT(system_domain)
-        generated_answer = get_dialogue_answer_states(generated_question)
-        generated_result = llm_judge_response(generated_question, generated_answer["response"])
+    files = ["mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1",
+    metrics = [0,1,2]
 
-        tot = 0
-        for v in generated_result.values():
-            tot += v
-        average = tot/len(generated_result.values())
+    for file in files:
+        for metric in metrics:
+            print(["Accuracy", "Relevancy", "Correctness"][metric] + " - " + file)
+            ea_1_1(metric, file)
 
-        if average < 0.3:
-            nlu_intent = generated_answer["nlu_output"]["intent"]
-            nlu_argument = generated_answer["nlu_output"]["argument"]
-            nlu_dialogue_act = generated_answer["nlu_output"]["dialogue_act"]
-            nlu_frame = generated_answer["nlu_output"]["frame"]
-
-            r = random.randint(0, 3)
-            match r:
-                case 0:
-                    nlu_intent = randomize_intent(nlu_intent)
-                case 1:
-                    nlu_argument = randomize_argument(nlu_argument)
-                case 2:
-                    nlu_dialogue_act = randomize_dialogue_act(nlu_dialogue_act)
-                case 3:
-                    nlu_frame = randomize_frame(nlu_frame)
-
-            print("___ new ___")
-            generated_new_question = generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act ,nlu_frame)
-            generated_new_answer = get_dialogue_answer_states(generated_new_question)
-            generated_new_result = llm_judge_response(generated_new_question, generated_new_answer["response"])
