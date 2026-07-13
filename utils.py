@@ -247,7 +247,7 @@ def randomize_argument(argument):
 
     available = [i for i in argument_list if i != argument]
     new = random.choice(available)
-    print(argument + " ---> " + new)
+    print(str(argument) + " ---> " + new)
 
     return new
 
@@ -259,12 +259,11 @@ def randomize_dialogue_act(dialogue_act):
 
     available = [i for i in dialogue_act_list if i != dialogue_act]
     new = random.choice(available)
-    print(dialogue_act + " ---> " + new)
+    print(str(dialogue_act) + " ---> " + new)
 
     return new
 
 
-#TODO
 def randomize_frame(frame):
 
     frame_list = {

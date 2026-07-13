@@ -488,6 +488,8 @@ def check_not_accurate(file, threshold):
 
 
 def llm_judge_response(question, response):
+    response = response.replace("MUTATION ", "")
+
     prompt = f"""
     Evaluate the answer to this question considering this description of the system domain:  {system_domain}.
 
@@ -1199,12 +1201,19 @@ def ea_1_1(metric, file):
 
     generated_question = generate_test_GPT(system_domain)
 
+    with open("res/results/mutation_res/" + file + ".csv", "a", newline="", encoding="utf-8") as f_out:
+        writer = csv.writer(f_out, delimiter=";")
+        writer.writerow(
+            ["METRIC", "QUESTION", "ANSWER", "JUDGE_VALUE", "FAILS", "MUTED", "NLU_OUTPUT"])
+
     while no_improve < 5 and tot_mutations < budget:
         tot_mutations += 1
         print("Tot mutations: ", tot_mutations)
 
         generated_answer = get_dialogue_answer_states(generated_question, file_name = file)
         generated_result = llm_judge_response(generated_question, generated_answer["response"])
+
+
 
         if list(generated_result.values())[metric] <= best_fail:
             no_improve = 0
@@ -1215,6 +1224,12 @@ def ea_1_1(metric, file):
 
         if list(generated_result.values())[metric] <= 0.3:
             tot_fails.append([generated_question, list(generated_result.values())[metric]])
+
+        with open("res/results/mutation_res/" + file + ".csv", "a", newline="", encoding="utf-8") as f_out:
+            writer = csv.writer(f_out, delimiter=";")
+            writer.writerow(
+                [["Accuracy", "Relevancy", "Correctness"][metric], generated_question, generated_answer["response"],
+                 list(generated_result.values())[metric], len(tot_fails), "MUTATION" in generated_answer["response"], generated_answer["nlu_output"]])
 
         nlu_intent = next_mutable["nlu_output"]["intent"]
         nlu_argument = next_mutable["nlu_output"]["argument"]
