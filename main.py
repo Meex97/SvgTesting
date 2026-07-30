@@ -442,8 +442,8 @@ def generate_test_GPT(domain_description, n=30):
         response: “slot names”: [“finalStates”], “slot values”: [“?”]
         
 
-        Generate one simple question. They must be a single sentence containing only one request. Do not produce multi-part or compound questions. 
-        Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;... 
+        Generate five simple question, as different from each other as possible, separated by the symbol ";". They must be a single sentence containing only one request. Do not produce multi-part or compound questions.
+        Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
         Avoid long or step-by-step questions.
         """
 
@@ -451,6 +451,9 @@ def generate_test_GPT(domain_description, n=30):
     #         Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
     #         Avoid long or step-by-step questions.
 
+    # Generate one simple question. They must be a single sentence containing only one request. Do not produce multi-part or compound questions.
+    #         Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
+    #         Avoid long or step-by-step questions.
 
     response = client.chat.completions.create(
         model="gpt-5.1",
@@ -464,7 +467,38 @@ def generate_test_GPT(domain_description, n=30):
 
     text = response.choices[0].message.content.strip()
     print(text)
-    return text
+
+    file_path = "res/results/mutation_res/questions.txt"
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        for q in text.split(";"):
+            f.write(q + "\n")
+
+
+    #return text.split(";")
+
+def get_next_question():
+    file_path = "res/results/mutation_res/questions.txt"
+
+    if not os.path.exists(file_path):
+        return None
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    if not lines:
+        os.remove(file_path)
+        return None
+
+    question = lines[0].strip()
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.writelines(lines[1:])
+
+    if len(lines) == 1:
+        os.remove(file_path)
+
+    return question
 
 
 def check_not_accurate(file, threshold):
@@ -487,26 +521,29 @@ def check_not_accurate(file, threshold):
     print("Inaccurate count: " + str(inaccurate) + "/" + str(tot - 1))
 
 
-def llm_judge_response(question, response):
+def llm_judge_response(question, response, multi):
     response = response.replace("MUTATION ", "")
 
     prompt = f"""
-    Evaluate the answer to this question considering this description of the system domain:  {system_domain}.
+    Evaluate the answer to this question considering this description of the system domain: {system_domain}.
 
     Question: {question}
     System answer: {response}
+    System visual update: {multi}
 
     Give a score as a real number from 0.0 to 1.0 (0=irrelevant or incomprehensible, 1=perfectly relevant and clear)
     for each dimension: 
     1 - AnswerAccuracy: measures the agreement between a model’s response and a reference ground truth (inferred from the system description) for a given question.
     2 - AnswerRelevancy: The evaluation metric, Answer Relevancy, focuses on assessing how pertinent the generated answer is to the given prompt. A lower score is assigned to answers that are incomplete or contain redundant information and higher scores indicate better relevancy. 
     3 - AnswerCorrectness: measures how many of the relevant documents (or pieces of information) were successfully retrieved. It focuses on not missing important results. Higher recall means fewer relevant documents were left out. In short, recall is about not missing anything important. 
+    4 - VisualRelevancy: This evaluation metric assesses how relevant the System Visual Update is to the given prompt. The System Visual Update consists of the IDs of the SVG image elements that should be enlightened. These elements are expected to be relevant to and reflect the content of the generated response. Lower scores are assigned when the selected elements are incomplete, unrelated, or contain redundant information, while higher scores indicate that the selected SVG elements accurately support the response. If the generated response is generic and does not refer to any specific visual element, an empty System Visual Update is considered the correct output and should receive a high score.
     
     Return only JSON, example:
     {{
         "AnswerAccuracy": 0.85,
         "AnswerRelevancy": 0.239,
-        "AnswerCorrectness": 1.0
+        "AnswerCorrectness": 1.0,
+        "VisualRelevancy": 0.7
     }}
     """
 
@@ -1198,61 +1235,78 @@ def ea_1_1(metric, file):
     budget = 15
     tot_fails = []
     next_mutable = ""
+    i = 0
 
-    generated_question = generate_test_GPT(system_domain)
+    file_questions_path = "res/results/mutation_res/questions.txt"
 
-    with open("res/results/mutation_res/" + file + ".csv", "a", newline="", encoding="utf-8") as f_out:
-        writer = csv.writer(f_out, delimiter=";")
-        writer.writerow(
-            ["METRIC", "QUESTION", "ANSWER", "JUDGE_VALUE", "FAILS", "MUTED", "NLU_OUTPUT"])
+    if not os.path.exists(file_questions_path):
+        generate_test_GPT(system_domain)
 
-    while no_improve < 5 and tot_mutations < budget:
-        tot_mutations += 1
-        print("Tot mutations: ", tot_mutations)
+    output_file = "res/results/mutation_res/" + file + ".csv"
 
-        generated_answer = get_dialogue_answer_states(generated_question, file_name = file)
-        generated_result = llm_judge_response(generated_question, generated_answer["response"])
-
-
-
-        if list(generated_result.values())[metric] <= best_fail:
-            no_improve = 0
-            best_fail = list(generated_result.values())[metric]
-            next_mutable = generated_answer
-        else:
-            no_improve += 1
-
-        if list(generated_result.values())[metric] <= 0.3:
-            tot_fails.append([generated_question, list(generated_result.values())[metric]])
-
-        with open("res/results/mutation_res/" + file + ".csv", "a", newline="", encoding="utf-8") as f_out:
+    if not os.path.exists(output_file):
+        with open(output_file, "a", newline="", encoding="utf-8") as f_out:
             writer = csv.writer(f_out, delimiter=";")
             writer.writerow(
-                [["Accuracy", "Relevancy", "Correctness"][metric], generated_question, generated_answer["response"],
-                 list(generated_result.values())[metric], len(tot_fails), "MUTATION" in generated_answer["response"], generated_answer["nlu_output"]])
+                ["METRIC", "ITERATION", "QUESTION", "ANSWER", "VISUAL_ANSWER", "JUDGE_VALUE", "FAILS", "MUTED", "NLU_OUTPUT"])
 
-        nlu_intent = next_mutable["nlu_output"]["intent"]
-        nlu_argument = next_mutable["nlu_output"]["argument"]
-        nlu_dialogue_act = next_mutable["nlu_output"]["dialogue_act"]
-        nlu_frame = next_mutable["nlu_output"]["frame"]
+    while True:
+        i += 1
+        generated_question = get_next_question()
+        if generated_question is None:
+            break
 
-        r = random.randint(0, 3)
-        match r:
-            case 0:
-                nlu_intent = randomize_intent(nlu_intent)
-            case 1:
-                nlu_argument = randomize_argument(nlu_argument)
-            case 2:
-                nlu_dialogue_act = randomize_dialogue_act(nlu_dialogue_act)
-            case 3:
-                nlu_frame = randomize_frame(nlu_frame)
-            case 4:
-                #  todo multimodal switch (con prob 50% dopo gli altri)
-                print("todo multimodal switch")
-        generated_question = generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act, nlu_frame)
-        print("No improvement: " + str(no_improve) + " - Total fails (<= 0.3): " + str(len(tot_fails)))
+        while no_improve < 5 and tot_mutations < budget:
+            tot_mutations += 1
+            print("Tot mutations: ", tot_mutations)
 
-    print("_____ ALL FAILS _____: ", tot_fails)
+            generated_answer = get_dialogue_answer_states(generated_question, file_name = file)
+            print("Generated answer: ", generated_answer)
+            visual = [
+                element["symbol"]
+                for element in generated_answer.get("svg_elements", [])
+            ]
+            generated_result = llm_judge_response(generated_question, generated_answer["response"], visual)
+
+
+            if list(generated_result.values())[metric] <= best_fail:
+                no_improve = 0
+                best_fail = list(generated_result.values())[metric]
+                next_mutable = generated_answer
+            else:
+                no_improve += 1
+
+            if list(generated_result.values())[metric] <= 0.3:
+                tot_fails.append([generated_question, list(generated_result.values())[metric]])
+
+            with open(output_file, "a", newline="", encoding="utf-8") as f_out:
+                writer = csv.writer(f_out, delimiter=";")
+                writer.writerow(
+                    [["Accuracy", "Relevancy", "Correctness", "VisualRelevancy"][metric], i, generated_question, generated_answer["response"], visual,
+                     list(generated_result.values())[metric], len(tot_fails), "MUTATION" in generated_answer["response"], generated_answer["nlu_output"]])
+
+            nlu_intent = next_mutable["nlu_output"]["intent"]
+            nlu_argument = next_mutable["nlu_output"]["argument"]
+            nlu_dialogue_act = next_mutable["nlu_output"]["dialogue_act"]
+            nlu_frame = next_mutable["nlu_output"]["frame"]
+
+            r = random.randint(0, 3)
+            match r:
+                case 0:
+                    nlu_intent = randomize_intent(nlu_intent)
+                case 1:
+                    nlu_argument = randomize_argument(nlu_argument)
+                case 2:
+                    nlu_dialogue_act = randomize_dialogue_act(nlu_dialogue_act)
+                case 3:
+                    nlu_frame = randomize_frame(nlu_frame)
+                #case 4:
+                    #  todo multimodal switch (con prob 50% dopo gli altri)
+                #    print("todo multimodal switch")
+            generated_question = generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act, nlu_frame)
+            print("No improvement: " + str(no_improve) + " - Total fails (<= 0.3): " + str(len(tot_fails)))
+
+        print("_____ ALL FAILS _____: ", tot_fails)
 
 
 def get_slots():
@@ -1365,10 +1419,10 @@ if __name__ == "__main__":
     #get_slots()
 
     files = ["mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1",
-    metrics = [0,1,2]
+    metrics = [0,1,2,3]
 
     for file in files:
         for metric in metrics:
-            print(["Accuracy", "Relevancy", "Correctness"][metric] + " - " + file)
+            print(["Accuracy", "Relevancy", "Correctness", "VisualRelevancy"][metric] + " - " + file)
             ea_1_1(metric, file)
 
