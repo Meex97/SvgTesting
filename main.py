@@ -481,14 +481,14 @@ def get_next_question():
     file_path = "res/results/mutation_res/questions.txt"
 
     if not os.path.exists(file_path):
-        return None
+        return None, 6
 
     with open(file_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     if not lines:
         os.remove(file_path)
-        return None
+        return None, 6
 
     question = lines[0].strip()
 
@@ -498,7 +498,7 @@ def get_next_question():
     if len(lines) == 1:
         os.remove(file_path)
 
-    return question
+    return question, 6 - len(lines)
 
 
 def check_not_accurate(file, threshold):
@@ -1228,13 +1228,73 @@ def generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act, nlu_f
     return text
 
 
+def multimodal_switch(generated_question):
+    ids = []
+
+    generated_question = generated_question.lower()
+
+    count = 0
+    replace = ["this", "that", "that", "that", "that", "that"]
+
+
+    for i in range(0, 6):
+
+        # transition value
+        target = f"transition value from state q{i} to state q{i + 1}"
+        if target in generated_question:
+            generated_question = generated_question.replace(target, replace[count], 1)
+            ids.append(f"valore-q{i}-q{i + 1}")
+            count += 1
+
+        target = f"transition value from q{i} to q{i + 1}"
+        if target in generated_question:
+            generated_question = generated_question.replace(target, replace[count], 1)
+            ids.append(f"valore-q{i}-q{i + 1}")
+            count += 1
+
+        # transition
+        target = f"transition from state q{i} to state q{i + 1}"
+        if target in generated_question:
+            generated_question = generated_question.replace(target, replace[count], 1)
+            ids.append(f"transizione-q{i}-q{i + 1}")
+            count += 1
+
+        target = f"transition from q{i} to q{i + 1}"
+        if target in generated_question:
+            generated_question = generated_question.replace(target, replace[count], 1)
+            ids.append(f"transizione-q{i}-q{i + 1}")
+            count += 1
+
+        # final state
+        target = f"final state q{i}"
+        if target in generated_question:
+            generated_question = generated_question.replace(target, replace[count], 1)
+            ids.append(f"stato-q{i}-finale")
+            count += 1
+
+        # initial state
+        target = f"initial state q{i}"
+        if target in generated_question:
+            generated_question = generated_question.replace(target, replace[count], 1)
+            ids.append(f"start-q{i}")
+            count += 1
+
+        # state
+        target = f"state q{i}"
+        if target in generated_question:
+            generated_question = generated_question.replace(target, replace[count], 1)
+            ids.append(f"stato-q{i}")
+            count += 1
+
+    generated_question = generated_question.replace("the this", "this")
+    generated_question = generated_question.replace("the that", "that")
+
+    if not ids:
+        ids = None
+    return generated_question, ids
+
+
 def ea_1_1(metric, file):
-    tot_mutations = 0
-    best_fail = 10
-    no_improve = 0
-    budget = 15
-    tot_fails = []
-    next_mutable = ""
     i = 0
 
     file_questions_path = "res/results/mutation_res/questions.txt"
@@ -1251,8 +1311,17 @@ def ea_1_1(metric, file):
                 ["METRIC", "ITERATION", "QUESTION", "ANSWER", "VISUAL_ANSWER", "JUDGE_VALUE", "FAILS", "MUTED", "NLU_OUTPUT"])
 
     while True:
-        i += 1
-        generated_question = get_next_question()
+        #i += 1
+        no_improve = 0
+        tot_mutations = 0
+        best_fail = 10
+        budget = 15
+        tot_fails = []
+        next_mutable = ""
+
+        generated_question, i = get_next_question()
+        print(generated_question)
+        ids = None
         if generated_question is None:
             break
 
@@ -1260,7 +1329,7 @@ def ea_1_1(metric, file):
             tot_mutations += 1
             print("Tot mutations: ", tot_mutations)
 
-            generated_answer = get_dialogue_answer_states(generated_question, file_name = file)
+            generated_answer = get_dialogue_answer_states(generated_question, file_name = file, ids=ids)
             print("Generated answer: ", generated_answer)
             visual = [
                 element["symbol"]
@@ -1300,13 +1369,18 @@ def ea_1_1(metric, file):
                     nlu_dialogue_act = randomize_dialogue_act(nlu_dialogue_act)
                 case 3:
                     nlu_frame = randomize_frame(nlu_frame)
-                #case 4:
-                    #  todo multimodal switch (con prob 50% dopo gli altri)
-                #    print("todo multimodal switch")
+
             generated_question = generate_question_from_nlu(nlu_intent, nlu_argument, nlu_dialogue_act, nlu_frame)
+
+            rm = random.randint(0, 1)
+            if rm == 1:
+                generated_question, ids = multimodal_switch(generated_question)
+            else:
+                ids = None
+
             print("No improvement: " + str(no_improve) + " - Total fails (<= 0.3): " + str(len(tot_fails)))
 
-        print("_____ ALL FAILS _____: ", tot_fails)
+            print("_____ ALL FAILS _____: ", tot_fails)
 
 
 def get_slots():
@@ -1418,8 +1492,10 @@ if __name__ == "__main__":
     
     #get_slots()
 
-    files = ["mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1",
+    files = []  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
     metrics = [0,1,2,3]
+
+    ea_1_1(3, "mutation_text4")
 
     for file in files:
         for metric in metrics:
