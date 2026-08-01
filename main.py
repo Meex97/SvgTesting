@@ -1311,7 +1311,6 @@ def ea_1_1(metric, file):
                 ["METRIC", "ITERATION", "QUESTION", "ANSWER", "VISUAL_ANSWER", "JUDGE_VALUE", "FAILS", "MUTED", "NLU_OUTPUT"])
 
     while True:
-        #i += 1
         no_improve = 0
         tot_mutations = 0
         best_fail = 10
@@ -1492,10 +1491,12 @@ if __name__ == "__main__":
     
     #get_slots()
 
-    files = []  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
+    files = ["mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
     metrics = [0,1,2,3]
 
-    ea_1_1(3, "mutation_text4")
+    ea_1_1(1, "mutation_text1")
+    ea_1_1(2, "mutation_text1")
+    ea_1_1(3, "mutation_text1")
 
     for file in files:
         for metric in metrics:

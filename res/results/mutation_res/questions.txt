@@ -1,0 +1,3 @@
+How can I know which strings are accepted by this automaton just by looking at the picture?
+Is this automaton deterministic or nondeterministic based on the transitions shown?
+What is the shortest input string that starts from q0 and brings the automaton back to q0?
