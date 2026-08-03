@@ -1,0 +1,1 @@
+Is this automaton deterministic or nondeterministic?
