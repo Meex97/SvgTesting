@@ -1491,10 +1491,12 @@ if __name__ == "__main__":
     
     #get_slots()
 
-    files = ["mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
+    files = ["mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
     metrics = [0,1,2,3]
 
-
+    #ea_1_1(1, "mutation_frame3")
+    ea_1_1(2, "mutation_frame3")
+    ea_1_1(3, "mutation_frame3")
 
     for file in files:
         for metric in metrics:
