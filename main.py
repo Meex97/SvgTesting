@@ -1308,7 +1308,7 @@ def ea_1_1(metric, file):
         with open(output_file, "a", newline="", encoding="utf-8") as f_out:
             writer = csv.writer(f_out, delimiter=";")
             writer.writerow(
-                ["METRIC", "ITERATION", "QUESTION", "ANSWER", "VISUAL_ANSWER", "JUDGE_VALUE", "FAILS", "MUTED", "NLU_OUTPUT"])
+                ["METRIC", "ITERATION", "QUESTION", "ANSWER", "VISUAL_ANSWER", "JUDGE_VALUE", "FAILS", "MUTED", "NLU_OUTPUT", "METRIC_SCORES"])
 
     while True:
         no_improve = 0
@@ -1351,7 +1351,7 @@ def ea_1_1(metric, file):
                 writer = csv.writer(f_out, delimiter=";")
                 writer.writerow(
                     [["Accuracy", "Relevancy", "Correctness", "VisualRelevancy"][metric], i, generated_question, generated_answer["response"], visual,
-                     list(generated_result.values())[metric], len(tot_fails), "MUTATION" in generated_answer["response"], generated_answer["nlu_output"]])
+                     list(generated_result.values())[metric], len(tot_fails), "MUTATION" in generated_answer["response"], generated_answer["nlu_output"], list(generated_result.values())])
 
             nlu_intent = next_mutable["nlu_output"]["intent"]
             nlu_argument = next_mutable["nlu_output"]["argument"]
@@ -1418,7 +1418,47 @@ def get_slots():
         print("frame:", dict_frame)
 
 
+def check_mutations():
+    files = ["mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
+    metrics = [0, 1, 2, 3]
 
+    for file in files:
+        accuracy = 0
+        relevancy = 0
+        correctness = 0
+        visual_relevancy = 0
+        for i in range(1, 4):
+            tmp_accuracy = 0
+            tmp_relevancy = 0
+            tmp_correctness = 0
+            tmp_visual_relevancy = 0
+            with open(f"res/results/mutation_res/{i}/{file}.csv", newline="", encoding="latin1") as csvfile:
+
+                reader = csv.reader(csvfile, delimiter=";")
+
+                for row in reader:
+                    muted = row[7]
+                    metric = row[0]
+                    if muted == "True":
+                        match metric:
+                            case "Accuracy":
+                                tmp_accuracy += 1
+                            case "Relevancy":
+                                tmp_relevancy += 1
+                            case "Correctness":
+                                tmp_correctness += 1
+                            case "VisualRelevancy":
+                                tmp_visual_relevancy += 1
+                            case _:
+                                print("metric unknown")
+
+                print(f"{file}-{i}: ({tmp_accuracy}/{tmp_relevancy}/{tmp_correctness}/{tmp_visual_relevancy})")
+                accuracy += tmp_accuracy
+                relevancy += tmp_relevancy
+                correctness += tmp_correctness
+                visual_relevancy += tmp_visual_relevancy
+
+        print(f"{file}-tot: ({accuracy}/{relevancy}/{correctness}/{visual_relevancy})\n\n")
 
 if __name__ == "__main__":
     #main()
@@ -1491,15 +1531,18 @@ if __name__ == "__main__":
     
     #get_slots()
 
-    files = ["mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
+
+    # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
+    files = ["mutation_frame5", "mutation_text5"]  # "mutation_frame4", "mutation_frame5", "mutation_text5"
     metrics = [0,1,2,3]
 
-    #ea_1_1(1, "mutation_frame3")
-    ea_1_1(2, "mutation_frame3")
-    ea_1_1(3, "mutation_frame3")
+    #ea_1_1(2, "mutation_frame5")
+    #ea_1_1(3, "mutation_frame5")
 
     for file in files:
         for metric in metrics:
             print(["Accuracy", "Relevancy", "Correctness", "VisualRelevancy"][metric] + " - " + file)
             ea_1_1(metric, file)
+
+    #check_mutations()
 
