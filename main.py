@@ -1675,7 +1675,7 @@ def update_metrics():
                                  "MUTED", "NLU_OUTPUT", "METRIC_SCORES"])
 
 
-            with open(file_path, newline="", encoding="latin1") as csvfile:
+            with open(file_path, newline="", encoding="utf-8") as csvfile:
 
                 reader = csv.reader(csvfile, delimiter=";")
 
