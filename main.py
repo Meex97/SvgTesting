@@ -351,17 +351,17 @@ def generate_test_GPT(domain_description, n=30):
 
     prompt = f"""
         I describe you a system: {domain_description}.
-        
+
         Tell me five natural questions that a high school student learning finite state machine for the first time might ask this system. 
         The question should be both about the image shown (eg. is it possible to go from q2 to q4?, what is the value of the transition from q1 to q2?) and more general concepts.
         The question should try to expose failures in the system / cases where the system doesn't respond properly to the question.
         The system replies to questions extracting from the user input elements related to four categories of a frame and then uses just this frame filled with information to find the best matching answer.
         The frame is composed by: dialogue act, argument, intent and slots.
-        
+
         The dialogue act is extracted with this prompt: Given the label “dialogue act” and the following possible values: AutoF:autoNegative,
         DS:opening, SOM:initGreeting, DS:suggest, OCM:selfCorrection, SOM:initGoodbye,
         SOM:returnGreeting, SOM:thanking, Ta:answer, Ta:checkQuestion, Ta:propositionalQuestion, Ta:request, Ta:setQuestion, TuM:turnAccept.
-        
+
         The argument is extracted with this prompt: Given the label “argument” and the following possible values: Automata, Language, Pattern, State, Transition, Null
         You must extract the argument from the user input.
         Examples:
@@ -371,7 +371,7 @@ def generate_test_GPT(domain_description, n=30):
         both initial and final state.” System response: “State”
         - Example 3: User input: “What is the language of an automaton?” System
         response: “Language”
-        
+
         The intent is extracted with this prompt: Given the label “intent” and the following possible values: fsa-theoretical, fsapractical, Null
         You must extract the argument from the user input.
         Examples:
@@ -381,7 +381,7 @@ def generate_test_GPT(domain_description, n=30):
         both initial and final state.” System response:“fsa-practical”,
         - Example 3: User input: “What is the final state of an automaton?” System
         response: “fsa-theoretical”,
-        
+
         The slots are extracted with this prompt: Given the following slot names:
         - alphabet: The system or user asks or provides information about the alphabet
         of the automaton (e.g. “alphabet”:[“1”,“0”] or “alphabet”:“?”)
@@ -440,7 +440,7 @@ def generate_test_GPT(domain_description, n=30):
         [“q0”]]
         - Example 3: User input: “What is the final state of an automaton?” System
         response: “slot names”: [“finalStates”], “slot values”: [“?”]
-        
+
 
         Generate five simple question, as different from each other as possible, separated by the symbol ";". They must be a single sentence containing only one request. Do not produce multi-part or compound questions.
         Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
@@ -474,8 +474,142 @@ def generate_test_GPT(domain_description, n=30):
         for q in text.split(";"):
             f.write(q + "\n")
 
+def generate_test_GPT_baseline(domain_description, n=30):
+    client = OpenAI()
 
-    #return text.split(";")
+    prompt = f"""
+        I describe you a system: {domain_description}.
+
+        Tell me fifteen natural questions that a high school student learning finite state machine for the first time might ask this system. 
+        The question should be both about the image shown (eg. is it possible to go from q2 to q4?, what is the value of the transition from q1 to q2?) and more general concepts.
+        The question should try to expose failures in the system / cases where the system doesn't respond properly to the question.
+        The system replies to questions extracting from the user input elements related to four categories of a frame and then uses just this frame filled with information to find the best matching answer.
+        The frame is composed by: dialogue act, argument, intent and slots.
+
+        The dialogue act is extracted with this prompt: Given the label “dialogue act” and the following possible values: AutoF:autoNegative,
+        DS:opening, SOM:initGreeting, DS:suggest, OCM:selfCorrection, SOM:initGoodbye,
+        SOM:returnGreeting, SOM:thanking, Ta:answer, Ta:checkQuestion, Ta:propositionalQuestion, Ta:request, Ta:setQuestion, TuM:turnAccept.
+
+        The argument is extracted with this prompt: Given the label “argument” and the following possible values: Automata, Language, Pattern, State, Transition, Null
+        You must extract the argument from the user input.
+        Examples:
+        - Example 1: User input: “How many transitions are there in the automaton?”
+        System response: “Transition”
+        - Example 2: User input: “There are a total of 3 states: q0, q1, and q2. q0 is
+        both initial and final state.” System response: “State”
+        - Example 3: User input: “What is the language of an automaton?” System
+        response: “Language”
+
+        The intent is extracted with this prompt: Given the label “intent” and the following possible values: fsa-theoretical, fsapractical, Null
+        You must extract the argument from the user input.
+        Examples:
+        - Example 1: User input: “How many transitions are there in the automaton?”
+        System response: “fsa-practical”
+        - Example 2: User input: “There are a total of 3 states: q0, q1, and q2. q0 is
+        both initial and final state.” System response:“fsa-practical”,
+        - Example 3: User input: “What is the final state of an automaton?” System
+        response: “fsa-theoretical”,
+
+        The slots are extracted with this prompt: Given the following slot names:
+        - alphabet: The system or user asks or provides information about the alphabet
+        of the automaton (e.g. “alphabet”:[“1”,“0”] or “alphabet”:“?”)
+        - automatonType: The system or user asks or provides information about the
+        typology of the automaton (e.g. “automatonType”: “deterministic” or “automatonType”:“?”)
+        - finalStates: The system or user asks or provides information about the final
+        states of the automaton (e.g. “finalStates”: [“Q1”, “Q2”] or “finalStates”:“?”)
+        - graphicRepresentation: The system or user asks or provides information
+        about the graphical representation of the automaton (e.g. “graphicRepresentation”:
+        “pentagon” or “graphicRepresentation”:“?”)
+        - initialState: The system or user asks or provides information about the initial
+        state of the automaton (e.g. “initialState”: “Q0” or “initialState”:“?”)
+        - input: The system or user asks or provides information about the input of
+        the automaton (e.g. “input”: [“11000”,“1100011000”] or “input”:“?”)
+        - languageType: The system or user asks or provides information about the language
+        type of the automaton (e.g. “languageType”: “regular” or “languageType”:“?”)
+        - numberOfFinalStates: The system or user asks or provides information about
+        the number of final states of the automaton (e.g. “numberOfFinalStates”: “2”
+        or “numberOfFinalStates”:“?”)
+        - numberOfStates: The system or user asks or provides information about the
+        number of states of the automaton (e.g. “numberOfStates”: “5” or “numberOf-
+        States”:“?”)
+        - numberOfTransitions: The system or user asks or provides information about
+        the number of transitions of the automaton (e.g. “numberOfTransitions”: “7”
+        or “numberOfTransitions”:“?”)
+        - optimalSpatialRepresentation: The system or user asks or provides information
+        about the optimal spatial representation of the automaton (e.g. “optimalSpatialRepresentation”:“?”)
+        - output: The system or user asks or provides information about the output
+        of the automaton (e.g. “output”: “accepted/denied” or “output”:“?”)
+        - patternType: The system or user asks or provides information about the
+        pattern type of the automaton (e.g. “patternType”: “clockwise” or “pattern-
+        Type”:“?”)
+        - stateFrom: The system or user requests or provides information about a specific
+        starting state (e.g.“stateFrom”: “q3” or “stateFrom”:“?”)
+        - stateTo: The system or user requests or provides information about a specific
+        ending state (e.g.“stateTo”: “q3” or “stateTo”:“?”)
+        - stateWithMostTransitions: The system or user asks or provides information
+        about the state with most transitions (e.g.“stateWithMostTransitions”: “q3” or
+        “stateWithMostTransitions”:“?”)
+        - stateWithoutTransitions: The system or user asks or provides information
+        about the states without transitions (e.g.“stateWithoutTransitions”: “q3” or
+        “stateWithoutTransitions”:“?”)
+        - states: The system or user asks or provides information about the states of
+        the automaton (e.g. “states”: [“Q1”,“Q2”] or “states”:“?”)
+        - transitions: The system or user asks or provides information about the transitions
+        of the automaton (e.g. “transitions”: [[“Q0”,“Q1”,“1”],[“Q1”,“Q2”,“0”]] or
+        “transitions”:“?”)
+        You must respond with a JSON containing information extracted from the
+        user input.
+        Examples:
+        - Example 1: User input: “How many transitions are there in the automaton?”
+        System response: “slot names”: [“numberOfTransitions”], “slot values”: [“?”]
+        - Example 2: User input: “There are a total of 3 states: q0, q1, and q2. q0 is
+        both initial and final state.” System response: “slot names”: [“numberOfStates”,
+        “states”, “initialState”, “finalStates”], “slot values”: [“3”, [“q0”, “q1”, “q2”], “q0”,
+        [“q0”]]
+        - Example 3: User input: “What is the final state of an automaton?” System
+        response: “slot names”: [“finalStates”], “slot values”: [“?”]
+
+
+        Generate 15 simple English sentences that each contain exactly one straightforward request. Each sentence must be a single, 
+        independent sentence: do not use subordinate clauses, multiple requests, compound requests, questions with embedded clauses, 
+        or sentences containing more than one action. The sentences should be grammatically simple and natural, but they should be 
+        deliberately challenging for a dialogue understanding system. Try to create ambiguity, unusual but valid phrasing, indirect 
+        wording, lexical variation, or structures that could make intent, dialogue act, frame, or argument extraction difficult.
+        Each sentence must still express only one simple request.
+        
+        Separate them by the symbol ";". 
+        Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
+        """
+
+    # Generate five simple question, as different from each other as possible, separated by the symbol ";". They must be a single sentence containing only one request. Do not produce multi-part or compound questions.
+    #         Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
+    #         Avoid long or step-by-step questions.
+
+    # Generate one simple question. They must be a single sentence containing only one request. Do not produce multi-part or compound questions.
+    #         Examples of the format: How many states does the automaton have?;What happens when reading 101 from state q2?;...
+    #         Avoid long or step-by-step questions.
+
+    response = client.chat.completions.create(
+        model="gpt-5.1",
+        messages=[
+            {"role": "system", "content": "You are a question generator for a dialogue system."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.8,
+        max_completion_tokens=500,
+    )
+
+    text = response.choices[0].message.content.strip()
+    print(text)
+
+    file_path = "res/results/mutation_res/questions.txt"
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        for q in text.split(";"):
+            f.write(q + "\n")
+
+
+#return text.split(";")
 
 def get_next_question():
     file_path = "res/results/mutation_res/questions.txt"
@@ -1419,7 +1553,7 @@ def get_slots():
 
 
 def check_mutations():
-    files = ["mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
+    files = ["mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_frame4", "mutation_frame5", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4", "mutation_text5"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
     metrics = [0, 1, 2, 3]
 
     for file in files:
@@ -1427,11 +1561,15 @@ def check_mutations():
         relevancy = 0
         correctness = 0
         visual_relevancy = 0
+        base_line = 0
+
         for i in range(1, 4):
+            tot_base = 0
             tmp_accuracy = 0
             tmp_relevancy = 0
             tmp_correctness = 0
             tmp_visual_relevancy = 0
+            tmp_base_line = 0
             with open(f"res/results/mutation_res/{i}/{file}.csv", newline="", encoding="latin1") as csvfile:
 
                 reader = csv.reader(csvfile, delimiter=";")
@@ -1439,6 +1577,11 @@ def check_mutations():
                 for row in reader:
                     muted = row[7]
                     metric = row[0]
+
+                    if metric == "BaseLine":
+                        tot_base += 1
+
+
                     if muted == "True":
                         match metric:
                             case "Accuracy":
@@ -1449,16 +1592,118 @@ def check_mutations():
                                 tmp_correctness += 1
                             case "VisualRelevancy":
                                 tmp_visual_relevancy += 1
+                            case "BaseLine":
+                                tmp_base_line += 1
                             case _:
                                 print("metric unknown")
 
-                print(f"{file}-{i}: ({tmp_accuracy}/{tmp_relevancy}/{tmp_correctness}/{tmp_visual_relevancy})")
+                print(f"{i} - {file} - {tot_base}")
+                #print(f"{file}-{i}: ({tmp_accuracy}/{tmp_relevancy}/{tmp_correctness}/{tmp_visual_relevancy}/{tmp_base_line})")
                 accuracy += tmp_accuracy
                 relevancy += tmp_relevancy
                 correctness += tmp_correctness
                 visual_relevancy += tmp_visual_relevancy
+                base_line += tmp_base_line
 
-        print(f"{file}-tot: ({accuracy}/{relevancy}/{correctness}/{visual_relevancy})\n\n")
+
+        print(f"{file}-tot: ({accuracy}/{relevancy}/{correctness}/{visual_relevancy}/{base_line})\n\n")
+
+
+def base_line(file):
+
+    for x in range(3):
+
+        file_questions_path = "res/results/mutation_res/questions.txt"
+
+        if not os.path.exists(file_questions_path):
+            generate_test_GPT_baseline(system_domain)
+
+        output_file = "res/results/mutation_res/" + file + ".csv"
+
+        if not os.path.exists(output_file):
+            with open(output_file, "a", newline="", encoding="utf-8") as f_out:
+                writer = csv.writer(f_out, delimiter=";")
+                writer.writerow(
+                    ["METRIC", "ITERATION", "QUESTION", "ANSWER", "VISUAL_ANSWER", "JUDGE_VALUE", "FAILS", "MUTED",
+                     "NLU_OUTPUT", "METRIC_SCORES"])
+
+        while True:
+            tot_mutations = 0
+
+            generated_question, i = get_next_question()
+            print(generated_question)
+
+            if generated_question is None:
+                break
+
+            tot_mutations += 1
+            print("Tot mutations: ", tot_mutations)
+
+            generated_answer = get_dialogue_answer_states(generated_question, file_name=file)
+            print("Generated answer: ", generated_answer)
+            visual = [
+                element["symbol"]
+                for element in generated_answer.get("svg_elements", [])
+            ]
+            generated_result = llm_judge_response(generated_question, generated_answer["response"], visual)
+
+
+            with open(output_file, "a", newline="", encoding="utf-8") as f_out:
+                writer = csv.writer(f_out, delimiter=";")
+                writer.writerow(
+                    ["BaseLine", i + (x * 15), generated_question,
+                     generated_answer["response"], visual,
+                     -1, -1,
+                     "MUTATION" in generated_answer["response"], generated_answer["nlu_output"],
+                     list(generated_result.values())])
+
+
+def update_metrics():
+    files = ["mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_frame4", "mutation_frame5",
+             "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4", "mutation_text5"]
+
+    for file in files:
+
+        for i in range(1, 4):
+
+            file_path = f"res/results/mutation_res/{i}/{file}.csv"
+            output_file = f"res/results/mutation_res/{i}/m_{file}.csv"
+            print("______________________________ " + file_path)
+            with open(output_file, "a", newline="", encoding="utf-8") as f_out:
+                writer = csv.writer(f_out, delimiter=";")
+                writer.writerow(["METRIC", "ITERATION", "QUESTION", "ANSWER", "VISUAL_ANSWER", "JUDGE_VALUE", "FAILS",
+                                 "MUTED", "NLU_OUTPUT", "METRIC_SCORES"])
+
+
+            with open(file_path, newline="", encoding="latin1") as csvfile:
+
+                reader = csv.reader(csvfile, delimiter=";")
+
+                skip_first = 0
+                for row in reader:
+                    if skip_first == 0:
+                        skip_first = 1
+                    else:
+                        skip_first += 1
+                        question = row[2]
+                        answer = row[3]
+                        visual_answer = row[4]
+
+                        if len(row) > 9:
+                            metrics_score = row[9]
+                            print(f"{skip_first}_copied")
+                        else:
+                            metrics_score = list(llm_judge_response(question, answer, visual_answer).values())
+                            print(f"{skip_first}_generated")
+
+
+                        with open(output_file, "a", newline="", encoding="utf-8") as f_out:
+                            writer = csv.writer(f_out, delimiter=";")
+                            writer.writerow(
+                                [row[0], row[1], question, answer, visual_answer, metrics_score, row[5], row[6], row[7], row[8],
+                                 metrics_score])
+
+
 
 if __name__ == "__main__":
     #main()
@@ -1533,16 +1778,29 @@ if __name__ == "__main__":
 
 
     # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
-    files = ["mutation_frame5", "mutation_text5"]  # "mutation_frame4", "mutation_frame5", "mutation_text5"
-    metrics = [0,1,2,3]
+    #files = ["mutation_frame6"]
+    #metrics = [0,1,2,3]
 
-    #ea_1_1(2, "mutation_frame5")
-    #ea_1_1(3, "mutation_frame5")
+    #ea_1_1(3, "mutation_frame6")
 
-    for file in files:
-        for metric in metrics:
-            print(["Accuracy", "Relevancy", "Correctness", "VisualRelevancy"][metric] + " - " + file)
-            ea_1_1(metric, file)
+    #for file in files:
+    #    for metric in metrics:
+    #        print(["Accuracy", "Relevancy", "Correctness", "VisualRelevancy"][metric] + " - " + file)
+    #        ea_1_1(metric, file)
+
+
+    #"mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_frame6", "mutation_frame5", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4", "mutation_text5"
+
+    files = ["mutation_frame1", "mutation_frame3", "mutation_frame6", "mutation_frame5", "mutation_text1", "mutation_text4", "mutation_text5", "mutation_text3"]
+    files = []
+    #for file in files:
+    #    print("___________________________________ " + file)
+    #    try:
+    #        base_line(file)
+    #    except Exception as e:
+    #        print(f"error: {e}")
 
     #check_mutations()
+
+    update_metrics()
 
