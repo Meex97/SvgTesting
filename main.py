@@ -1563,14 +1563,25 @@ def check_mutations():
         visual_relevancy = 0
         base_line = 0
 
+        tot_accuracy = 0
+        tot_relevancy = 0
+        tot_correctness = 0
+        tot_visual_relevancy = 0
+        tot_base_line = 0
+
         for i in range(1, 4):
-            tot_base = 0
+            tmp_tot_base = 0
+            tmp_tot_accuracy = 0
+            tmp_tot_relevancy = 0
+            tmp_tot_correctness = 0
+            tmp_tot_visual_relevancy = 0
+
             tmp_accuracy = 0
             tmp_relevancy = 0
             tmp_correctness = 0
             tmp_visual_relevancy = 0
             tmp_base_line = 0
-            with open(f"res/results/mutation_res/{i}/{file}.csv", newline="", encoding="latin1") as csvfile:
+            with open(f"res/results/mutation_res/{i}/x_{file}.csv", newline="", encoding="utf-8") as csvfile:
 
                 reader = csv.reader(csvfile, delimiter=";")
 
@@ -1578,35 +1589,47 @@ def check_mutations():
                     muted = row[7]
                     metric = row[0]
 
-                    if metric == "BaseLine":
-                        tot_base += 1
-
-
-                    if muted == "True":
-                        match metric:
-                            case "Accuracy":
+                    match metric:
+                        case "Accuracy":
+                            tmp_tot_accuracy += 1
+                            if muted == "True":
                                 tmp_accuracy += 1
-                            case "Relevancy":
+                        case "Relevancy":
+                            tmp_tot_relevancy += 1
+                            if muted == "True":
                                 tmp_relevancy += 1
-                            case "Correctness":
+                        case "Correctness":
+                            tmp_tot_correctness += 1
+                            if muted == "True":
                                 tmp_correctness += 1
-                            case "VisualRelevancy":
+                        case "VisualRelevancy":
+                            tmp_tot_visual_relevancy += 1
+                            if muted == "True":
                                 tmp_visual_relevancy += 1
-                            case "BaseLine":
+                        case "BaseLine":
+                            tmp_tot_base += 1
+                            if muted == "True":
                                 tmp_base_line += 1
-                            case _:
-                                print("metric unknown")
+                        #case _:
+                        #    print("metric unknown: " + metric)
 
-                print(f"{i} - {file} - {tot_base}")
-                #print(f"{file}-{i}: ({tmp_accuracy}/{tmp_relevancy}/{tmp_correctness}/{tmp_visual_relevancy}/{tmp_base_line})")
+
+                #print(f"{i} - {file} - {tot_base}")
+                print(f"{file}-{i}: ({tmp_accuracy/tmp_tot_accuracy:.3f}/{tmp_relevancy/tmp_tot_relevancy:.3f}/{tmp_correctness/tmp_tot_correctness:.3f}/{tmp_visual_relevancy/tmp_tot_visual_relevancy:.3f}/{tmp_base_line/tmp_tot_base:.3f})")
+
                 accuracy += tmp_accuracy
                 relevancy += tmp_relevancy
                 correctness += tmp_correctness
                 visual_relevancy += tmp_visual_relevancy
                 base_line += tmp_base_line
 
+                tot_accuracy += tmp_tot_accuracy
+                tot_relevancy += tmp_tot_relevancy
+                tot_correctness += tmp_tot_correctness
+                tot_visual_relevancy += tmp_tot_visual_relevancy
+                tot_base_line += tmp_tot_base
 
-        print(f"{file}-tot: ({accuracy}/{relevancy}/{correctness}/{visual_relevancy}/{base_line})\n\n")
+        print(f"{file}-tot: ({accuracy/tot_accuracy:.3f}/{relevancy/tot_relevancy:.3f}/{correctness/tot_correctness:.3f}/{visual_relevancy/tot_visual_relevancy:.3f}/{base_line/tot_base_line:.3f})\n\n")
 
 
 def base_line(file):
@@ -1700,7 +1723,7 @@ def update_metrics():
                         with open(output_file, "a", newline="", encoding="utf-8") as f_out:
                             writer = csv.writer(f_out, delimiter=";")
                             writer.writerow(
-                                [row[0], row[1], question, answer, visual_answer, metrics_score, row[5], row[6], row[7], row[8],
+                                [row[0], row[1], question, answer, visual_answer, row[5], row[6], row[7], row[8],
                                  metrics_score])
 
 
@@ -1781,7 +1804,7 @@ if __name__ == "__main__":
     #files = ["mutation_frame6"]
     #metrics = [0,1,2,3]
 
-    #ea_1_1(3, "mutation_frame6")
+    #ea_1_1(0, "mutation_frame2")
 
     #for file in files:
     #    for metric in metrics:
@@ -1800,7 +1823,7 @@ if __name__ == "__main__":
     #    except Exception as e:
     #        print(f"error: {e}")
 
-    #check_mutations()
+    check_mutations()
 
-    update_metrics()
+    #update_metrics()
 
