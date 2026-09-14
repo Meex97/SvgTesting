@@ -1,1 +1,0 @@
-which state does the automaton end in after processing the input 11000?

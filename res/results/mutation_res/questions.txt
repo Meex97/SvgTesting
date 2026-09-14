@@ -1,2 +1,0 @@
-What is the difference between the language of an automaton and its alphabet?
-How can I know if this automaton is deterministic just by looking at the diagram?
