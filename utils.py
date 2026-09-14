@@ -200,10 +200,10 @@ def compare_ranks(ground_truth_list, comparison_list):
     for ground, comparison in zip(ground_truth_list, comparison_list):
         i = 0
 
-        print("RAGAS")
-        print(ground.keys())
-        print("LLM")
-        print(comparison.keys())
+        #print("RAGAS")
+        #print(ground.keys())
+        #print("LLM")
+        #print(comparison.keys())
 
         for meta, value in ground.items():
             if value != -1:

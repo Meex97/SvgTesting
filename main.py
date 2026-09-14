@@ -1556,6 +1556,29 @@ def check_mutations():
     files = ["mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_frame4", "mutation_frame5", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4", "mutation_text5"]  # "mutation_frame1", "mutation_frame2", "mutation_frame3", "mutation_text1", "mutation_text2", "mutation_text3", "mutation_text4"
     metrics = [0, 1, 2, 3]
 
+    print(
+        f"{'File':<30} "
+        f"{'Accuracy':>10} "
+        f"{'Relevancy':>10} "
+        f"{'Correctness':>12} "
+        f"{'Visual Rel.':>12} "
+        f"{'Baseline':>10}"
+    )
+
+    print("-" * 90)
+
+    global_accuracy = 0
+    global_relevancy = 0
+    global_correctness = 0
+    global_visual_relevancy = 0
+    global_base_line = 0
+
+    global_tot_accuracy = 0
+    global_tot_relevancy = 0
+    global_tot_correctness = 0
+    global_tot_visual_relevancy = 0
+    global_tot_base_line = 0
+
     for file in files:
         accuracy = 0
         relevancy = 0
@@ -1584,38 +1607,52 @@ def check_mutations():
             with open(f"res/results/mutation_res/{i}/x_{file}.csv", newline="", encoding="utf-8") as csvfile:
 
                 reader = csv.reader(csvfile, delimiter=";")
+                next(reader)
 
                 for row in reader:
                     muted = row[7]
                     metric = row[0]
 
+                    #print(row)
+                    #print(row[9])
+
+                    metric_scores = ast.literal_eval(row[9])
+                    val = metric_scores[3]
+
+                    #if not (row[4] == "[]" and val == 1):
+
                     match metric:
                         case "Accuracy":
                             tmp_tot_accuracy += 1
                             if muted == "True":
+                                #tmp_accuracy += val
                                 tmp_accuracy += 1
                         case "Relevancy":
                             tmp_tot_relevancy += 1
                             if muted == "True":
+                                #tmp_relevancy += val
                                 tmp_relevancy += 1
                         case "Correctness":
                             tmp_tot_correctness += 1
                             if muted == "True":
+                                #tmp_correctness += val
                                 tmp_correctness += 1
                         case "VisualRelevancy":
                             tmp_tot_visual_relevancy += 1
                             if muted == "True":
+                                #tmp_visual_relevancy += val
                                 tmp_visual_relevancy += 1
                         case "BaseLine":
                             tmp_tot_base += 1
                             if muted == "True":
+                                #tmp_base_line += val
                                 tmp_base_line += 1
                         #case _:
                         #    print("metric unknown: " + metric)
 
 
                 #print(f"{i} - {file} - {tot_base}")
-                print(f"{file}-{i}: ({tmp_accuracy/tmp_tot_accuracy:.3f}/{tmp_relevancy/tmp_tot_relevancy:.3f}/{tmp_correctness/tmp_tot_correctness:.3f}/{tmp_visual_relevancy/tmp_tot_visual_relevancy:.3f}/{tmp_base_line/tmp_tot_base:.3f})")
+                #print(f"{file}-{i}: ({tmp_accuracy/tmp_tot_accuracy:.3f}/{tmp_relevancy/tmp_tot_relevancy:.3f}/{tmp_correctness/tmp_tot_correctness:.3f}/{tmp_visual_relevancy/tmp_tot_visual_relevancy:.3f}/{tmp_base_line/tmp_tot_base:.3f})")
 
                 accuracy += tmp_accuracy
                 relevancy += tmp_relevancy
@@ -1629,8 +1666,44 @@ def check_mutations():
                 tot_visual_relevancy += tmp_tot_visual_relevancy
                 tot_base_line += tmp_tot_base
 
-        print(f"{file}-tot: ({accuracy/tot_accuracy:.3f}/{relevancy/tot_relevancy:.3f}/{correctness/tot_correctness:.3f}/{visual_relevancy/tot_visual_relevancy:.3f}/{base_line/tot_base_line:.3f})\n\n")
+        #print(f"{file}-tot: ({accuracy/tot_accuracy:.3f} / {relevancy/tot_relevancy:.3f} / {correctness/tot_correctness:.3f} / {visual_relevancy/tot_visual_relevancy:.3f} / {base_line/tot_base_line:.3f})\n")
+        #print(
+        #    f"{file:<30} "
+        #    f"{accuracy/tot_accuracy:>10.3f} "
+        #    f"{relevancy/tot_relevancy:>10.3f} "
+        #    f"{correctness/tot_correctness:>12.3f} "
+        #    f"{visual_relevancy/tot_visual_relevancy:>12.3f} "
+        #    f"{base_line/tot_base_line:>10.3f}"
+        #)
+        print(
+            f"{file:<30} "
+            f"{accuracy}/{tot_accuracy} "
+            f"{relevancy}/{tot_relevancy} "
+            f"{correctness}/{tot_correctness} "
+            f"{visual_relevancy}/{tot_visual_relevancy} "
+            f"{base_line}/{tot_base_line}"
+        )
 
+        global_accuracy += accuracy
+        global_relevancy += relevancy
+        global_correctness += correctness
+        global_visual_relevancy += visual_relevancy
+        global_base_line += base_line
+
+        global_tot_accuracy += tot_accuracy
+        global_tot_relevancy += tot_relevancy
+        global_tot_correctness += tot_correctness
+        global_tot_visual_relevancy += tot_visual_relevancy
+        global_tot_base_line += tot_base_line
+
+    print(
+        f"Tot: "
+        f"{global_accuracy}/{global_tot_accuracy} "
+        f"{global_relevancy}/{global_tot_relevancy} "
+        f"{global_correctness}/{global_tot_correctness} "
+        f"{global_visual_relevancy}/{global_tot_visual_relevancy} "
+        f"{global_base_line}/{global_tot_base_line}"
+    )
 
 def base_line(file):
 
@@ -1795,7 +1868,7 @@ if __name__ == "__main__":
     
     #check_mr_res()
 
-    #compare_LLM_results("res/accuracy/corpus/ragas_metamorphed_gpt5.csv", "res/accuracy/corpus/metamorphed_gpt5_1.csv")
+    compare_LLM_results("res/accuracy/corpus/ragas_metamorphed_gpt5.csv", "res/accuracy/corpus/metamorphed_gpt5_1.csv")
     
     #get_slots()
 
@@ -1823,7 +1896,8 @@ if __name__ == "__main__":
     #    except Exception as e:
     #        print(f"error: {e}")
 
-    check_mutations()
+    #print(list(llm_judge_response("Can you list all the transitions of this automaton for me?", "The automaton has 5 transitions: q0 with value 1 goes to q1, q1 with value 1 goes to q2, q2 with value 0 goes to q3, q3 with value 0 goes to q4, q4 with value 0 goes to q0", "['simbolo-q0-q1', 'simbolo-q1-q2', 'simbolo-q2-q3', 'simbolo-q3-q4', 'simbolo-q4-q0']").values()))
+    #check_mutations()
 
     #update_metrics()
 
